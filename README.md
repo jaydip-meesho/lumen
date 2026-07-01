@@ -7,6 +7,8 @@
 
 **A privacy-first coding harness.** Run local LLMs offline, or bring your own OpenRouter key for the full catalogue. Your code never leaves your machine when you don't want it to.
 
+**▶ Try it in your browser (no install): https://jaydip-meesho.github.io/lumen/app/** — an agentic coding playground that runs entirely client-side. Zero-setup demo, or connect your own OpenRouter key. Your code and key never touch a server.
+
 Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal coding assistant. Point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire model catalogue with a key you control. One interface, both worlds.
 
 <p align="center">
