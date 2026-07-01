@@ -355,6 +355,7 @@ function addAssistant(){ var d=document.createElement("div"); d.className="msg a
 function addToolLine(name,args){ var d=document.createElement("div"); d.className="tool"; d.innerHTML='⚙ '+esc(name)+' <span class="args">'+esc(JSON.stringify(args).slice(0,120))+'</span>'; log.appendChild(d); scrollLog(); return d; }
 function addResult(text){ if(!text)return; var d=document.createElement("div"); d.className="result"; d.textContent=text.length>500?text.slice(0,500)+"…":text; log.appendChild(d); scrollLog(); }
 function addStat(text){ var d=document.createElement("div"); d.className="stat"; d.textContent=text; log.appendChild(d); scrollLog(); }
+function addThinking(){ var d=document.createElement("div"); d.className="stat"; d.innerHTML='<span class="cursor-blink"></span> thinking…'; log.appendChild(d); scrollLog(); return d; }
 function addBanner(html,cls){ var d=document.createElement("div"); d.className="banner "+cls; d.innerHTML=html; log.appendChild(d); scrollLog(); return d; }
 
 /* ---------------- state ---------------- */
@@ -388,7 +389,7 @@ async function guard(msgs){
   });
 }
 
-async function callOpenRouter(messages){
+async function callOpenRouter(messages, onFirst){
   var maxTok=2048, res=null;
   for(var attempt=0; attempt<4 && !res; attempt++){
     var r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
@@ -415,8 +416,8 @@ async function callOpenRouter(messages){
       if(line.indexOf("data:")!==0) continue; var data=line.slice(5).trim(); if(data==="[DONE]") continue;
       var chunk; try{chunk=JSON.parse(data);}catch(e){continue;}
       var ch=(chunk.choices||[])[0]; if(!ch) continue; var d=ch.delta||{};
-      if(d.content){ if(!textSpan) textSpan=addAssistant(); full+=d.content; textSpan.textContent=full; scrollLog(); }
-      (d.tool_calls||[]).forEach(function(tc){ var idx=tc.index||0; var slot=calls[idx]||(calls[idx]={id:null,name:"",args:""});
+      if(d.content){ if(onFirst){onFirst();onFirst=null;} if(!textSpan) textSpan=addAssistant(); full+=d.content; textSpan.textContent=full; scrollLog(); }
+      (d.tool_calls||[]).forEach(function(tc){ if(onFirst){onFirst();onFirst=null;} var idx=tc.index||0; var slot=calls[idx]||(calls[idx]={id:null,name:"",args:""});
         if(tc.id)slot.id=tc.id; if(tc.function){ if(tc.function.name)slot.name+=tc.function.name; if(tc.function.arguments)slot.args+=tc.function.arguments; } });
     }
   }
@@ -431,13 +432,17 @@ async function runReal(userText){
     var msgs;
     try{ msgs=await guard(toApiMessages(history)); }
     catch(g){ if(g.guard==="airgap"){ addBanner("✗ Airgap is ON — refusing to contact the cloud. Nothing left your browser. Toggle airgap off to go live.","block"); } return; }
-    var out;
-    try{ out=await callOpenRouter(msgs); }
-    catch(e){ addBanner("✗ "+esc(e.message||e),"block"); return; }
+    var out, thinking=addThinking();
+    try{ out=await callOpenRouter(msgs, function(){ thinking.remove(); }); }
+    catch(e){ thinking.remove(); addBanner("✗ "+esc(e.message||e),"block"); return; }
+    thinking.remove();
     var asMsg={role:"assistant",content:out.content||null};
     if(out.tool_calls.length) asMsg.tool_calls=out.tool_calls;
     history.push(asMsg);
-    if(!out.tool_calls.length){ addStat(((Date.now()-t0)/1000).toFixed(1)+"s · "+model); return; }
+    if(!out.tool_calls.length){
+      if(!out.content){ var em=addAssistant(); em.textContent="(the model returned an empty response — press Send to retry, or switch model via ⚙ connect key)"; }
+      addStat(((Date.now()-t0)/1000).toFixed(1)+"s · "+model); return;
+    }
     for(var j=0;j<out.tool_calls.length;j++){ var tc=out.tool_calls[j], args={};
       try{args=JSON.parse(tc.function.arguments||"{}");}catch(e){}
       addToolLine(tc.function.name,args);
