@@ -9,6 +9,12 @@
 
 **▶ Try it in your browser (no install): https://jaydip-meesho.github.io/lumen/app/** — an agentic coding playground that runs entirely client-side. Zero-setup demo, or connect your own OpenRouter key. Your code and key never touch a server.
 
+### A guided tour of Lumen Web
+
+<p align="center">
+  <img src="docs/webtour.svg" alt="Guided tour of the Lumen Web interface — mode, airgap, project files, editor, run/preview, the agent, demo tasks, diff-approve, Secret Guard" width="900">
+</p>
+
 Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal coding assistant. Point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire model catalogue with a key you control. One interface, both worlds.
 
 <p align="center">

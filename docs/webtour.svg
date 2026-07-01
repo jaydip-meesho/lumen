@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 716" width="1000" height="716">
+<style>
+  @keyframes prog{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+  @keyframes s0{0%,3.36%{opacity:0}4.06%,11.84%{opacity:1}12.54%,100%{opacity:0}}
+  @keyframes s1{0%,12.54%{opacity:0}13.24%,21.01%{opacity:1}21.71%,100%{opacity:0}}
+  @keyframes s2{0%,21.71%{opacity:0}22.41%,30.19%{opacity:1}30.89%,100%{opacity:0}}
+  @keyframes s3{0%,30.89%{opacity:0}31.59%,39.36%{opacity:1}40.06%,100%{opacity:0}}
+  @keyframes s4{0%,40.06%{opacity:0}40.76%,48.54%{opacity:1}49.24%,100%{opacity:0}}
+  @keyframes s5{0%,49.24%{opacity:0}49.94%,57.71%{opacity:1}58.41%,100%{opacity:0}}
+  @keyframes s6{0%,58.41%{opacity:0}59.11%,66.88%{opacity:1}67.58%,100%{opacity:0}}
+  @keyframes s7{0%,67.58%{opacity:0}68.28%,76.06%{opacity:1}76.76%,100%{opacity:0}}
+  @keyframes s8{0%,76.76%{opacity:0}77.46%,85.23%{opacity:1}85.93%,100%{opacity:0}}
+  @keyframes s9{0%,85.93%{opacity:0}86.63%,94.41%{opacity:1}95.11%,100%{opacity:0}}
+</style>
+<rect width="1000" height="716" fill="#0B0906"/>
+<rect x="6" y="6" width="988" height="616" rx="14" fill="#14110C" stroke="#332B20" stroke-width="1"/>
+<rect x="6" y="6" width="988" height="46" rx="14" fill="#1E1A13"/>
+<rect x="6" y="30" width="988" height="22" fill="#1E1A13"/>
+<line x1="6" y1="52" x2="994" y2="52" stroke="#332B20"/>
+<circle cx="30" cy="30" r="6" fill="#F4B740"/>
+<text x="44" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="14" fill="#F1E9D8" font-weight="700">lumen</text>
+<text x="92" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#A99C82" font-weight="400">web</text>
+<rect x="150" y="17" width="206" height="26" rx="13" fill="none" stroke="#332B20" stroke-width="1"/>
+<circle cx="164" cy="30" r="4" fill="#F4B740"/>
+<text x="176" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#F4B740" font-weight="400">live · gpt-4o-mini</text>
+<rect x="686" y="17" width="126" height="26" rx="8" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="700" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#A99C82" font-weight="400">🔒 airgap: off</text>
+<rect x="820" y="17" width="116" height="26" rx="8" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="832" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#A99C82" font-weight="400">⚙ connected</text>
+<rect x="944" y="17" width="50" height="26" rx="8" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="958" y="34" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#A99C82" font-weight="400">GH</text>
+<line x1="452" y1="52" x2="452" y2="622" stroke="#332B20"/>
+<text x="28" y="80" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#F1E9D8" font-weight="700">Files</text>
+<text x="88" y="80" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#A99C82" font-weight="400">Preview</text>
+<rect x="336" y="62" width="106" height="24" rx="7" fill="#F4B740"/>
+<text x="350" y="79" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="11" fill="#14110C" font-weight="700">▶ Run / Preview</text>
+<rect x="14" y="94" width="152" height="222" rx="8" fill="#241F16"/>
+<text x="30" y="112" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#A99C82" font-weight="400">◦ .env</text>
+<text x="30" y="138" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#A99C82" font-weight="400">◦ README.md</text>
+<rect x="20" y="150" width="140" height="22" rx="5" fill="rgba(244,183,64,0.12)"/>
+<text x="30" y="164" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#F1E9D8" font-weight="400">◦ app.js</text>
+<text x="30" y="190" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#A99C82" font-weight="400">◦ index.html</text>
+<text x="30" y="216" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12.5" fill="#A99C82" font-weight="400">◦ style.css</text>
+<rect x="172" y="94" width="272" height="522" rx="0" fill="#0C0A07"/>
+<text x="184" y="118" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">var count = 0;</text>
+<text x="184" y="140" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">var el = document.getElementById('cou…</text>
+<text x="184" y="162" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">function render(){ el.textContent = c…</text>
+<text x="184" y="184" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">document.getElementById('inc').oncl…</text>
+<text x="184" y="206" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">document.getElementById('dec').oncl…</text>
+<text x="184" y="228" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F1E9D8" font-weight="400">render();</text>
+<text x="476" y="80" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F1E9D8" font-weight="700">agent</text>
+<rect x="858" y="64" width="126" height="26" rx="8" fill="#4FD1C5"/>
+<text x="870" y="81" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="11" fill="#14110C" font-weight="700">✓ auto-approve</text>
+<text x="476" y="118" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#F4B740" font-weight="700">lumen</text>
+<text x="476" y="138" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#F1E9D8" font-weight="400">I’m an AI coding agent running entirely in your browser —</text>
+<text x="476" y="158" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">your code and key never touch a server. Try a task below.</text>
+<rect x="474" y="548" width="150" height="28" rx="14" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="488" y="566" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#A99C82" font-weight="400">add a reset button</text>
+<rect x="632" y="548" width="196" height="28" rx="14" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="646" y="566" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#A99C82" font-weight="400">make the counter step by 5</text>
+<rect x="836" y="548" width="150" height="28" rx="14" fill="none" stroke="#332B20" stroke-width="1"/>
+<text x="850" y="566" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#A99C82" font-weight="400">read .env …</text>
+<rect x="474" y="584" width="430" height="30" rx="9" fill="#0C0A07" stroke="#332B20" stroke-width="1"/>
+<text x="486" y="603" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" fill="#7C7159" font-weight="400">Ask Lumen to build or change something…</text>
+<rect x="912" y="584" width="74" height="30" rx="9" fill="#F4B740"/>
+<text x="933" y="603" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" fill="#14110C" font-weight="700">Send</text>
+<rect x="6" y="630" width="988" height="74" rx="12" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="148" y="15" width="210" height="30" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s0 32.7s linear infinite"/>
+<g style="animation:s0 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">1</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 1/10  ·  Mode</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Live uses your OpenRouter key + any model. Demo mode needs no key at all.</text></g>
+<rect x="818" y="15" width="120" height="30" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s1 32.7s linear infinite"/>
+<g style="animation:s1 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">2</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 2/10  ·  Your key</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Bring your own key — stored only in your browser, sent only to OpenRouter. Never to us.</text></g>
+<rect x="684" y="15" width="130" height="30" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s2 32.7s linear infinite"/>
+<g style="animation:s2 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">3</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 3/10  ·  Airgap</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">One click hard-blocks ALL network — your code physically cannot leave the machine.</text></g>
+<rect x="12" y="92" width="156" height="226" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s3 32.7s linear infinite"/>
+<g style="animation:s3 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">4</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 4/10  ·  Project files</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">A real in-browser project — the agent reads and edits these files directly.</text></g>
+<rect x="170" y="92" width="276" height="222" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s4 32.7s linear infinite"/>
+<g style="animation:s4 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">5</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 5/10  ·  Editor</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">See the code the agent writes, live, as it changes each file.</text></g>
+<rect x="334" y="60" width="110" height="28" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s5 32.7s linear infinite"/>
+<g style="animation:s5 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">6</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 6/10  ·  Run / Preview</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Runs what you built live, right here in the browser — instant feedback.</text></g>
+<rect x="460" y="96" width="530" height="300" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s6 32.7s linear infinite"/>
+<g style="animation:s6 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">7</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 7/10  ·  The agent</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Ask in plain English; it streams its reply and calls tools to read, edit and run.</text></g>
+<rect x="472" y="546" width="520" height="32" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s7 32.7s linear infinite"/>
+<g style="animation:s7 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">8</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 8/10  ·  Demo tasks</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Zero-setup examples — click one and watch it work, no key needed.</text></g>
+<rect x="856" y="62" width="130" height="30" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s8 32.7s linear infinite"/>
+<g style="animation:s8 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">9</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 9/10  ·  Diff-approve</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Every change shows as a diff — approve it, or let auto-approve apply it.</text></g>
+<rect x="834" y="546" width="158" height="32" rx="9" fill="rgba(244,183,64,0.08)" stroke="#F4B740" stroke-width="2.5" style="animation:s9 32.7s linear infinite"/>
+<g style="animation:s9 32.7s linear infinite"><circle cx="40" cy="668" r="16" fill="#F4B740"/><text x="40" y="673" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="15" fill="#14110C" font-weight="800" text-anchor="middle">10</text><text x="68" y="662" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#F4B740" font-weight="700" text-anchor="0.4">STEP 10/10  ·  🛡 Secret Guard</text><text x="68" y="687" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" fill="#A99C82" font-weight="400">Try “read .env” — Lumen blocks API keys from ever reaching the cloud.</text></g>
+<rect x="6" y="710" width="988" height="4" rx="2" fill="#332B20"/>
+<rect x="6" y="710" width="988" height="4" rx="2" fill="#F4B740" style="transform-box:fill-box;transform-origin:left;animation:prog 32.7s linear infinite"/>
+</svg>
