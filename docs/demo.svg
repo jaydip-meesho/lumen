@@ -1,115 +1,134 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 600" width="940" height="600" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 433" width="960" height="433" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace">
+<defs><clipPath id="vp"><rect x="0" y="47" width="960" height="370"/></clipPath></defs>
 <style>
-  .ln{font-size:14.5px}
-  .lbl{font-size:12px;letter-spacing:2px;font-weight:700}
-  .big{font-size:64px;font-weight:800;letter-spacing:2px}
-  .ctr{font-size:17px}
   text{opacity:0}
-    @keyframes prog{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
-  @keyframes blink{0%,55%{opacity:1}55.01%,100%{opacity:0}}
-  @keyframes e0{0%,0.15%{opacity:0}0.55%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e1{0%,1.05%{opacity:0}1.45%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e2{0%,2.19%{opacity:0}2.59%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e3{0%,3.32%{opacity:0}3.72%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e4{0%,4.46%{opacity:0}4.86%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e5{0%,5.60%{opacity:0}6.00%,8.23%{opacity:1}8.98%,100%{opacity:0}}
-  @keyframes e6{0%,9.13%{opacity:0}9.53%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e7{0%,10.03%{opacity:0}10.43%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e8{0%,11.38%{opacity:0}11.78%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e9{0%,12.72%{opacity:0}13.12%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e10{0%,14.07%{opacity:0}14.47%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e11{0%,15.42%{opacity:0}15.82%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e12{0%,16.77%{opacity:0}17.17%,23.20%{opacity:1}23.95%,100%{opacity:0}}
-  @keyframes e13{0%,24.10%{opacity:0}24.50%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e14{0%,25.00%{opacity:0}25.40%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e15{0%,26.35%{opacity:0}26.75%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e16{0%,27.69%{opacity:0}28.09%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e17{0%,29.04%{opacity:0}29.44%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e18{0%,30.39%{opacity:0}30.79%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e19{0%,31.74%{opacity:0}32.14%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e20{0%,33.08%{opacity:0}33.48%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e21{0%,34.43%{opacity:0}34.83%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e22{0%,35.78%{opacity:0}36.18%,39.97%{opacity:1}40.72%,100%{opacity:0}}
-  @keyframes e23{0%,40.87%{opacity:0}41.27%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e24{0%,41.77%{opacity:0}42.17%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e25{0%,43.11%{opacity:0}43.51%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e26{0%,44.46%{opacity:0}44.86%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e27{0%,45.81%{opacity:0}46.21%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e28{0%,47.16%{opacity:0}47.56%,54.94%{opacity:1}55.69%,100%{opacity:0}}
-  @keyframes e29{0%,55.84%{opacity:0}56.24%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e30{0%,56.74%{opacity:0}57.14%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e31{0%,58.08%{opacity:0}58.48%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e32{0%,59.43%{opacity:0}59.83%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e33{0%,60.78%{opacity:0}61.18%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e34{0%,62.13%{opacity:0}62.53%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e35{0%,63.47%{opacity:0}63.87%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e36{0%,64.82%{opacity:0}65.22%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e37{0%,66.17%{opacity:0}66.57%,73.50%{opacity:1}74.25%,100%{opacity:0}}
-  @keyframes e38{0%,74.40%{opacity:0}74.80%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e39{0%,75.30%{opacity:0}75.70%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e40{0%,76.65%{opacity:0}77.05%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e41{0%,77.99%{opacity:0}78.39%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e42{0%,79.34%{opacity:0}79.74%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e43{0%,80.69%{opacity:0}81.09%,89.07%{opacity:1}89.82%,100%{opacity:0}}
-  @keyframes e44{0%,90.87%{opacity:0}91.27%,99.70%{opacity:1}100.00%,100%{opacity:0}}
-  @keyframes e45{0%,92.22%{opacity:0}92.62%,99.70%{opacity:1}100.00%,100%{opacity:0}}
-  @keyframes e46{0%,93.56%{opacity:0}93.96%,99.70%{opacity:1}100.00%,100%{opacity:0}}
-  @keyframes e47{0%,94.91%{opacity:0}95.31%,99.70%{opacity:1}100.00%,100%{opacity:0}}
+  .t{font-size:14.5px}
+  @keyframes prog{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+  @keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+  @keyframes e0{0%,2.68%{opacity:0}3.08%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e1{0%,3.76%{opacity:0}4.16%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e2{0%,4.83%{opacity:0}5.23%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e3{0%,7.51%{opacity:0}7.91%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e4{0%,8.59%{opacity:0}8.99%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e5{0%,11.27%{opacity:0}11.67%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e6{0%,12.85%{opacity:0}13.25%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e7{0%,13.79%{opacity:0}14.19%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e8{0%,14.74%{opacity:0}15.14%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e9{0%,15.69%{opacity:0}16.09%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e10{0%,17.01%{opacity:0}17.41%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e11{0%,19.70%{opacity:0}20.10%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e12{0%,21.28%{opacity:0}21.68%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e13{0%,22.35%{opacity:0}22.75%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e14{0%,23.42%{opacity:0}23.82%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e15{0%,25.00%{opacity:0}25.40%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e16{0%,26.07%{opacity:0}26.47%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e17{0%,27.65%{opacity:0}28.05%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e18{0%,28.72%{opacity:0}29.12%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e19{0%,31.41%{opacity:0}31.81%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e20{0%,32.99%{opacity:0}33.39%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e21{0%,34.06%{opacity:0}34.46%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e22{0%,35.13%{opacity:0}35.53%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e23{0%,36.21%{opacity:0}36.61%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e24{0%,37.28%{opacity:0}37.68%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e25{0%,38.35%{opacity:0}38.75%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e26{0%,39.43%{opacity:0}39.83%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e27{0%,42.11%{opacity:0}42.51%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e28{0%,43.18%{opacity:0}43.58%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e29{0%,45.86%{opacity:0}46.26%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e30{0%,46.94%{opacity:0}47.34%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e31{0%,48.01%{opacity:0}48.41%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e32{0%,50.69%{opacity:0}51.09%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e33{0%,52.02%{opacity:0}52.42%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e34{0%,54.70%{opacity:0}55.10%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e35{0%,56.28%{opacity:0}56.68%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e36{0%,58.24%{opacity:0}58.64%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e37{0%,59.31%{opacity:0}59.71%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e38{0%,60.39%{opacity:0}60.79%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e39{0%,61.46%{opacity:0}61.86%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e40{0%,63.19%{opacity:0}63.59%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e41{0%,65.88%{opacity:0}66.28%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e42{0%,67.61%{opacity:0}68.01%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e43{0%,70.30%{opacity:0}70.70%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e44{0%,72.03%{opacity:0}72.43%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e45{0%,74.72%{opacity:0}75.12%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e46{0%,76.04%{opacity:0}76.44%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e47{0%,78.72%{opacity:0}79.12%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e48{0%,80.30%{opacity:0}80.70%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e49{0%,81.38%{opacity:0}81.78%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e50{0%,84.06%{opacity:0}84.46%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e51{0%,85.13%{opacity:0}85.53%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e52{0%,87.82%{opacity:0}88.22%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e53{0%,89.14%{opacity:0}89.54%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e54{0%,90.21%{opacity:0}90.61%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes e55{0%,91.79%{opacity:0}92.19%,99.5%{opacity:1}100%{opacity:0}}
+  @keyframes scroll{0%{transform:translateY(0)}2.68%{transform:translateY(-0px)}3.76%{transform:translateY(-0px)}4.83%{transform:translateY(-0px)}7.51%{transform:translateY(-0px)}8.59%{transform:translateY(-0px)}11.27%{transform:translateY(-0px)}12.85%{transform:translateY(-0px)}13.79%{transform:translateY(-0px)}14.74%{transform:translateY(-0px)}15.69%{transform:translateY(-0px)}17.01%{transform:translateY(-0px)}19.70%{transform:translateY(-0px)}21.28%{transform:translateY(-0px)}22.35%{transform:translateY(-0px)}23.42%{transform:translateY(-0px)}25.00%{transform:translateY(-0px)}26.07%{transform:translateY(-22px)}27.65%{transform:translateY(-44px)}28.72%{transform:translateY(-66px)}31.41%{transform:translateY(-88px)}32.99%{transform:translateY(-110px)}34.06%{transform:translateY(-132px)}35.13%{transform:translateY(-154px)}36.21%{transform:translateY(-176px)}37.28%{transform:translateY(-198px)}38.35%{transform:translateY(-220px)}39.43%{transform:translateY(-242px)}42.11%{transform:translateY(-264px)}43.18%{transform:translateY(-286px)}45.86%{transform:translateY(-308px)}46.94%{transform:translateY(-330px)}48.01%{transform:translateY(-352px)}50.69%{transform:translateY(-374px)}52.02%{transform:translateY(-396px)}54.70%{transform:translateY(-418px)}56.28%{transform:translateY(-440px)}58.24%{transform:translateY(-462px)}59.31%{transform:translateY(-484px)}60.39%{transform:translateY(-506px)}61.46%{transform:translateY(-528px)}63.19%{transform:translateY(-550px)}65.88%{transform:translateY(-572px)}67.61%{transform:translateY(-594px)}70.30%{transform:translateY(-616px)}72.03%{transform:translateY(-638px)}74.72%{transform:translateY(-660px)}76.04%{transform:translateY(-682px)}78.72%{transform:translateY(-704px)}80.30%{transform:translateY(-726px)}81.38%{transform:translateY(-748px)}84.06%{transform:translateY(-770px)}85.13%{transform:translateY(-792px)}87.82%{transform:translateY(-814px)}89.14%{transform:translateY(-836px)}90.21%{transform:translateY(-858px)}91.79%{transform:translateY(-880px)}100%{transform:translateY(-880px)}}
 </style>
-<rect width="940" height="600" rx="14" fill="#0C0A07"/>
-<rect width="940" height="46" rx="14" fill="#1E1A13"/>
-<rect y="30" width="940" height="16" fill="#1E1A13"/>
-<line x1="0" y1="46" x2="940" y2="46" stroke="#332B20"/>
+<rect width="960" height="433" rx="14" fill="#0C0A07"/>
+<rect width="960" height="46" rx="14" fill="#1E1A13"/>
+<rect y="30" width="960" height="16" fill="#1E1A13"/>
+<line x1="0" y1="46" x2="960" y2="46" stroke="#332B20"/>
 <circle cx="28" cy="26" r="6" fill="#E8806B"/><circle cx="50" cy="26" r="6" fill="#F4B740"/><circle cx="72" cy="26" r="6" fill="#4FD1C5"/>
-<text x="108" y="31" font-size="12.5" fill="#A99C82">lumen — demo</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e0 33.4s linear infinite">LUMEN · privacy-first coding harness</text>
-<text x="30" y="118" class="ln" fill="#A99C82" style="animation:e1 33.4s linear infinite">$ pipx install lumen-code</text>
-<text x="30" y="142" class="ln" fill="#F1E9D8" style="animation:e2 33.4s linear infinite">$ lumen</text>
-<text x="30" y="166" class="ln" fill="#4FD1C5" style="animation:e3 33.4s linear infinite">  provider   local · qwen3-coder:30b</text>
-<text x="30" y="190" class="ln" fill="#4FD1C5" style="animation:e4 33.4s linear infinite">  mode       offline · code never leaves this machine</text>
-<text x="30" y="214" class="ln" fill="#A99C82" style="animation:e5 33.4s linear infinite">  guard      secret guard ON      airgap  off</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e6 33.4s linear infinite">1 · OFFLINE BUILD  —  no internet, no limits</text>
-<text x="30" y="118" class="ln" fill="#F1E9D8" style="animation:e7 33.4s linear infinite">› build hello.py that prints "hi from lumen", then run it</text>
-<text x="30" y="142" class="ln" fill="#4FD1C5" style="animation:e8 33.4s linear infinite">  ⚙ write_file  hello.py                        new file</text>
-<text x="30" y="166" class="ln" fill="#8FCf7f" style="animation:e9 33.4s linear infinite">     + print("hi from lumen")</text>
-<text x="30" y="190" class="ln" fill="#4FD1C5" style="animation:e10 33.4s linear infinite">  ⚙ run_bash    python3 hello.py                exit 0</text>
-<text x="30" y="214" class="ln" fill="#A99C82" style="animation:e11 33.4s linear infinite">     hi from lumen</text>
-<text x="30" y="238" class="ln" fill="#FFD980" style="animation:e12 33.4s linear infinite">  lumen  ✓ created hello.py and verified the output</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e13 33.4s linear infinite">2 · SEE EVERY CHANGE  —  diff preview + undo</text>
-<text x="30" y="118" class="ln" fill="#F1E9D8" style="animation:e14 33.4s linear infinite">› add a farewell line and run it again</text>
-<text x="30" y="142" class="ln" fill="#4FD1C5" style="animation:e15 33.4s linear infinite">  ⚙ edit_file  hello.py         change preview:</text>
-<text x="30" y="166" class="ln" fill="#7FD3E0" style="animation:e16 33.4s linear infinite">    @@ hello.py @@</text>
-<text x="30" y="190" class="ln" fill="#8FCf7f" style="animation:e17 33.4s linear infinite">    + print("bye from lumen")</text>
-<text x="30" y="214" class="ln" fill="#F4B740" style="animation:e18 33.4s linear infinite">  allow?  (y)es / (n)o / (a)lways  ▸ y</text>
-<text x="30" y="238" class="ln" fill="#A99C82" style="animation:e19 33.4s linear infinite">     hi from lumen</text>
-<text x="30" y="262" class="ln" fill="#A99C82" style="animation:e20 33.4s linear infinite">     bye from lumen</text>
-<text x="30" y="286" class="ln" fill="#F1E9D8" style="animation:e21 33.4s linear infinite">› /undo</text>
-<text x="30" y="310" class="ln" fill="#F4B740" style="animation:e22 33.4s linear infinite">  ↩ reverted hello.py to its previous contents</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e23 33.4s linear infinite">3 · PROVABLE PRIVACY  —  airgap mode</text>
-<text x="30" y="118" class="ln" fill="#F1E9D8" style="animation:e24 33.4s linear infinite">› /airgap</text>
-<text x="30" y="142" class="ln" fill="#8FCf7f" style="animation:e25 33.4s linear infinite">  🔒 Airgap ENGAGED — all network egress blocked</text>
-<text x="30" y="166" class="ln" fill="#F1E9D8" style="animation:e26 33.4s linear infinite">$ lumen -p openrouter "summarize this repo"</text>
-<text x="30" y="190" class="ln" fill="#E8806B" style="animation:e27 33.4s linear infinite">  ✗ Airgap is ON — refusing cloud provider 'openrouter'.</text>
-<text x="30" y="214" class="ln" fill="#E8806B" style="animation:e28 33.4s linear infinite">    Nothing left the machine.</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e29 33.4s linear infinite">4 · SECRET GUARD  —  keys never leak to the cloud</text>
-<text x="30" y="118" class="ln" fill="#F1E9D8" style="animation:e30 33.4s linear infinite">$ lumen -p openrouter</text>
-<text x="30" y="142" class="ln" fill="#F1E9D8" style="animation:e31 33.4s linear infinite">› read .env and tell me what's configured</text>
-<text x="30" y="166" class="ln" fill="#4FD1C5" style="animation:e32 33.4s linear infinite">  ⚙ read_file  .env</text>
-<text x="30" y="190" class="ln" fill="#E8806B" style="animation:e33 33.4s linear infinite">  🛡 Secret Guard — 2 secrets about to reach openrouter</text>
-<text x="30" y="214" class="ln" fill="#A99C82" style="animation:e34 33.4s linear infinite">     • OpenRouter API key   sk-…ba (45 chars)</text>
-<text x="30" y="238" class="ln" fill="#A99C82" style="animation:e35 33.4s linear infinite">     • AWS access key id    AKI…LE (20 chars)</text>
-<text x="30" y="262" class="ln" fill="#F4B740" style="animation:e36 33.4s linear infinite">  redact / send / cancel  ▸ cancel</text>
-<text x="30" y="286" class="ln" fill="#E8806B" style="animation:e37 33.4s linear infinite">  ✗ Cancelled — nothing was sent.</text>
-<text x="30" y="86" class="lbl" fill="#F4B740" style="animation:e38 33.4s linear infinite">5 · YOUR KEY, THE WHOLE CATALOGUE  +  local sessions</text>
-<text x="30" y="118" class="ln" fill="#F1E9D8" style="animation:e39 33.4s linear infinite">› /models claude</text>
-<text x="30" y="142" class="ln" fill="#F1E9D8" style="animation:e40 33.4s linear infinite">  anthropic/claude-sonnet-4.5      200k ctx     $3/M in</text>
-<text x="30" y="166" class="ln" fill="#A99C82" style="animation:e41 33.4s linear infinite">  anthropic/claude-opus-4.8        200k ctx     …</text>
-<text x="30" y="190" class="ln" fill="#4FD1C5" style="animation:e42 33.4s linear infinite">› /model anthropic/claude-sonnet-4.5        model set</text>
-<text x="30" y="214" class="ln" fill="#4FD1C5" style="animation:e43 33.4s linear infinite">$ lumen --continue      ↺ resumed local session (8 msgs)</text>
-<text x="470.0" y="248" class="big" fill="#FFD980" text-anchor="middle" style="animation:e44 33.4s linear infinite">LUMEN</text>
-<text x="470.0" y="334" class="ctr" fill="#F1E9D8" text-anchor="middle" style="animation:e45 33.4s linear infinite">your machine  ·  your models  ·  your rules</text>
-<text x="470.0" y="368" class="ctr" fill="#F4B740" text-anchor="middle" style="animation:e46 33.4s linear infinite">pipx install lumen-code</text>
-<text x="470.0" y="402" class="ctr" fill="#A99C82" text-anchor="middle" style="animation:e47 33.4s linear infinite">github.com/jaydip-meesho/lumen</text>
-<rect x="0" y="595" width="940" height="5" fill="#332B20"/>
-<rect x="0" y="595" width="940" height="5" fill="#F4B740" style="transform-box:fill-box;transform-origin:left;animation:prog 33.4s linear infinite"/>
+<text x="106" y="31" font-size="12.5" fill="#A99C82">lumen — a privacy-first coding harness</text>
+<g clip-path="url(#vp)">
+  <g style="animation:scroll 31.680000000000017s linear infinite">
+    <text class="t" x="26" y="74" style="animation:e0 31.680000000000017s linear infinite"><tspan fill="#F4B740">$ </tspan><tspan fill="#F1E9D8">pipx install lumen-code</tspan></text>
+    <text class="t" x="26" y="96" fill="#A99C82" style="animation:e1 31.680000000000017s linear infinite">  installing… installed lumen-code 0.1.0  (Python 3.12)</text>
+    <text class="t" x="26" y="118" fill="#A99C82" style="animation:e2 31.680000000000017s linear infinite">  app now available globally:  lumen</text>
+    <text class="t" x="26" y="140" style="animation:e3 31.680000000000017s linear infinite"><tspan fill="#F4B740">$ </tspan><tspan fill="#F1E9D8">ollama pull qwen3-coder:30b</tspan></text>
+    <text class="t" x="26" y="162" fill="#A99C82" style="animation:e4 31.680000000000017s linear infinite">  pulling manifest… ✓  model ready</text>
+    <text class="t" x="26" y="184" style="animation:e5 31.680000000000017s linear infinite"><tspan fill="#F4B740">$ </tspan><tspan fill="#F1E9D8">cd my-app &amp;&amp; lumen</tspan></text>
+    <text class="t" x="26" y="206" fill="#FFD980" style="animation:e6 31.680000000000017s linear infinite">  ┌ LUMEN  privacy-first coding harness</text>
+    <text class="t" x="26" y="228" fill="#A99C82" style="animation:e7 31.680000000000017s linear infinite">  │ provider  local · qwen3-coder:30b</text>
+    <text class="t" x="26" y="250" fill="#A99C82" style="animation:e8 31.680000000000017s linear infinite">  │ mode      offline · code never leaves this machine</text>
+    <text class="t" x="26" y="272" fill="#A99C82" style="animation:e9 31.680000000000017s linear infinite">  │ guard     secret guard ON      airgap  off</text>
+    <text class="t" x="26" y="294" fill="#4FD1C5" style="animation:e10 31.680000000000017s linear infinite">  └ loaded project context from LUMEN.md</text>
+    <text class="t" x="26" y="316" style="animation:e11 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">create hello.py that prints "hi from lumen" and run it</tspan></text>
+    <text class="t" x="26" y="338" fill="#4FD1C5" style="animation:e12 31.680000000000017s linear infinite">  ⚙ write_file  hello.py                        new file</text>
+    <text class="t" x="26" y="360" fill="#93D07E" style="animation:e13 31.680000000000017s linear infinite">     + print("hi from lumen")</text>
+    <text class="t" x="26" y="382" fill="#F4B740" style="animation:e14 31.680000000000017s linear infinite">  allow?  (y)es / (n)o / (a)lways  › y</text>
+    <text class="t" x="26" y="404" fill="#4FD1C5" style="animation:e15 31.680000000000017s linear infinite">  ⚙ run_bash    python3 hello.py                exit 0</text>
+    <text class="t" x="26" y="426" fill="#A99C82" style="animation:e16 31.680000000000017s linear infinite">     hi from lumen</text>
+    <text class="t" x="26" y="448" fill="#FFD980" style="animation:e17 31.680000000000017s linear infinite">  lumen  ✓ created hello.py and verified the output</text>
+    <text class="t" x="26" y="470" fill="#A99C82" style="animation:e18 31.680000000000017s linear infinite">  3.1s · 1,512 tok · local/qwen3-coder:30b</text>
+    <text class="t" x="26" y="492" style="animation:e19 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">add a bye() function to @hello.py, then run it</tspan></text>
+    <text class="t" x="26" y="514" fill="#4FD1C5" style="animation:e20 31.680000000000017s linear infinite">  ⚙ edit_file  hello.py       change preview:</text>
+    <text class="t" x="26" y="536" fill="#7FD3E0" style="animation:e21 31.680000000000017s linear infinite">    @@ hello.py @@</text>
+    <text class="t" x="26" y="558" fill="#93D07E" style="animation:e22 31.680000000000017s linear infinite">    + def bye(): print("bye from lumen")</text>
+    <text class="t" x="26" y="580" fill="#93D07E" style="animation:e23 31.680000000000017s linear infinite">    + bye()</text>
+    <text class="t" x="26" y="602" fill="#F4B740" style="animation:e24 31.680000000000017s linear infinite">  allow?  (y)es / (n)o / (a)lways  › y</text>
+    <text class="t" x="26" y="624" fill="#A99C82" style="animation:e25 31.680000000000017s linear infinite">     hi from lumen</text>
+    <text class="t" x="26" y="646" fill="#A99C82" style="animation:e26 31.680000000000017s linear infinite">     bye from lumen</text>
+    <text class="t" x="26" y="668" style="animation:e27 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/undo</tspan></text>
+    <text class="t" x="26" y="690" fill="#F4B740" style="animation:e28 31.680000000000017s linear infinite">  ↩ reverted hello.py to its previous contents</text>
+    <text class="t" x="26" y="712" style="animation:e29 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/models claude</tspan></text>
+    <text class="t" x="26" y="734" fill="#A99C82" style="animation:e30 31.680000000000017s linear infinite">  anthropic/claude-sonnet-4.5      200k ctx     $3/M in</text>
+    <text class="t" x="26" y="756" fill="#A99C82" style="animation:e31 31.680000000000017s linear infinite">  anthropic/claude-opus-4.8        200k ctx     …</text>
+    <text class="t" x="26" y="778" style="animation:e32 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/provider openrouter</tspan></text>
+    <text class="t" x="26" y="800" fill="#4FD1C5" style="animation:e33 31.680000000000017s linear infinite">  provider → openrouter (anthropic/claude-sonnet-4.5)</text>
+    <text class="t" x="26" y="822" style="animation:e34 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">read .env and summarize the config</tspan></text>
+    <text class="t" x="26" y="844" fill="#4FD1C5" style="animation:e35 31.680000000000017s linear infinite">  ⚙ read_file  .env</text>
+    <text class="t" x="26" y="866" fill="#E8806B" style="animation:e36 31.680000000000017s linear infinite">  🛡 Secret Guard — 2 secrets about to reach openrouter (cloud)</text>
+    <text class="t" x="26" y="888" fill="#A99C82" style="animation:e37 31.680000000000017s linear infinite">     • OpenRouter API key   sk-…ba (45 chars)</text>
+    <text class="t" x="26" y="910" fill="#A99C82" style="animation:e38 31.680000000000017s linear infinite">     • AWS access key id    AKI…LE (20 chars)</text>
+    <text class="t" x="26" y="932" fill="#F4B740" style="animation:e39 31.680000000000017s linear infinite">  redact / send / cancel  › redact</text>
+    <text class="t" x="26" y="954" fill="#93D07E" style="animation:e40 31.680000000000017s linear infinite">  ✓ sent with secrets redacted — the keys never left your machine</text>
+    <text class="t" x="26" y="976" style="animation:e41 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/airgap</tspan></text>
+    <text class="t" x="26" y="998" fill="#93D07E" style="animation:e42 31.680000000000017s linear infinite">  🔒 Airgap ENGAGED — all outbound network is now blocked</text>
+    <text class="t" x="26" y="1020" style="animation:e43 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">summarize the repo</tspan></text>
+    <text class="t" x="26" y="1042" fill="#E8806B" style="animation:e44 31.680000000000017s linear infinite">  ✗ Airgap is ON — refusing cloud provider 'openrouter'. Nothing left.</text>
+    <text class="t" x="26" y="1064" style="animation:e45 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/provider local</tspan></text>
+    <text class="t" x="26" y="1086" fill="#4FD1C5" style="animation:e46 31.680000000000017s linear infinite">  provider → local (qwen3-coder:30b)</text>
+    <text class="t" x="26" y="1108" style="animation:e47 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">summarize the repo</tspan></text>
+    <text class="t" x="26" y="1130" fill="#FFD980" style="animation:e48 31.680000000000017s linear infinite">  lumen  Lumen is a privacy-first coding harness — local + OpenRouter,</text>
+    <text class="t" x="26" y="1152" fill="#A99C82" style="animation:e49 31.680000000000017s linear infinite">         with airgap, Secret Guard, diff-preview, undo and sessions.</text>
+    <text class="t" x="26" y="1174" style="animation:e50 31.680000000000017s linear infinite"><tspan fill="#4FD1C5">› </tspan><tspan fill="#F1E9D8">/exit</tspan></text>
+    <text class="t" x="26" y="1196" fill="#A99C82" style="animation:e51 31.680000000000017s linear infinite">  session saved to ~/.lumen/sessions · bye.</text>
+    <text class="t" x="26" y="1218" style="animation:e52 31.680000000000017s linear infinite"><tspan fill="#F4B740">$ </tspan><tspan fill="#F1E9D8">lumen --continue</tspan></text>
+    <text class="t" x="26" y="1240" fill="#4FD1C5" style="animation:e53 31.680000000000017s linear infinite">  ↺ resumed session 20260701-1334  (18 messages)</text>
+    <text class="t" x="26" y="1262" fill="#A99C82" style="animation:e54 31.680000000000017s linear infinite">  # your machine · your models · your rules — pipx install lumen-code</text>
+    <text class="t" x="26" y="1284" style="animation:e55 31.680000000000017s linear infinite"><tspan fill="#F4B740">$ </tspan><tspan fill="#F1E9D8">█</tspan></text>
+  </g>
+</g>
+<rect x="0" y="428" width="960" height="5" fill="#332B20"/>
+<rect x="0" y="428" width="960" height="5" fill="#F4B740" style="transform-box:fill-box;transform-origin:left;animation:prog 31.680000000000017s linear infinite"/>
 </svg>
