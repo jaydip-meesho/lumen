@@ -188,8 +188,8 @@
     <label>OPENROUTER API KEY</label>
     <input id="keyInput" type="password" placeholder="sk-or-v1-…" autocomplete="off">
     <label>MODEL</label>
-    <input id="modelInput" type="text" value="anthropic/claude-3.5-sonnet" placeholder="provider/model">
-    <div class="note">Try <b>anthropic/claude-3.5-sonnet</b>, <b>openai/gpt-4o-mini</b>, <b>deepseek/deepseek-chat</b>, or <b>qwen/qwen-2.5-coder-32b-instruct</b>. Browse the whole catalogue at openrouter.ai/models.</div>
+    <input id="modelInput" type="text" value="openai/gpt-4o-mini" placeholder="provider/model">
+    <div class="note"><b>openai/gpt-4o-mini</b> and <b>deepseek/deepseek-chat</b> are cheap and work on a tiny balance; <b>anthropic/claude-3.5-sonnet</b> is stronger but pricier. Browse the full catalogue at openrouter.ai/models.<br>Low on credits? Add a few dollars at <b>openrouter.ai/settings/credits</b> — or just use demo mode, which needs no key. Lumen caps output per turn so small balances still work.</div>
     <div class="mrow">
       <button id="keyCancel">Stay in demo</button>
       <button class="primary" id="keySave">Go live</button>
@@ -358,7 +358,7 @@ function addStat(text){ var d=document.createElement("div"); d.className="stat";
 function addBanner(html,cls){ var d=document.createElement("div"); d.className="banner "+cls; d.innerHTML=html; log.appendChild(d); scrollLog(); return d; }
 
 /* ---------------- state ---------------- */
-var autoApprove=true, airgap=false, apiKey=null, model="anthropic/claude-3.5-sonnet";
+var autoApprove=true, airgap=false, apiKey=null, model="openai/gpt-4o-mini";
 var busy=false, ackSecrets={};
 try{ apiKey=localStorage.getItem("lumen_key")||null; var mm=localStorage.getItem("lumen_model"); if(mm)model=mm; }catch(e){}
 function setMode(){ var live=!!apiKey; var pill=$("#modePill"), t=$("#modeText");
@@ -389,13 +389,23 @@ async function guard(msgs){
 }
 
 async function callOpenRouter(messages){
-  var res=await fetch("https://openrouter.ai/api/v1/chat/completions",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey,
-      "HTTP-Referer":location.origin,"X-Title":"Lumen Web"},
-    body:JSON.stringify({model:model,messages:messages,tools:TOOLS_SCHEMA,tool_choice:"auto",stream:true,temperature:0})
-  });
-  if(!res.ok){ var t=await res.text(); throw new Error("OpenRouter "+res.status+": "+t.slice(0,300)); }
+  var maxTok=2048, res=null;
+  for(var attempt=0; attempt<4 && !res; attempt++){
+    var r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey,
+        "HTTP-Referer":location.origin,"X-Title":"Lumen Web"},
+      body:JSON.stringify({model:model,messages:messages,tools:TOOLS_SCHEMA,tool_choice:"auto",stream:true,temperature:0,max_tokens:maxTok})
+    });
+    if(r.status===402){
+      var t402=await r.text(); var mm=t402.match(/afford\s+(\d+)/);
+      if(mm){ var aff=parseInt(mm[1],10)-200; if(aff>=256 && aff<maxTok){ maxTok=aff; continue; } }
+      throw new Error("Out of OpenRouter credits for this request. Add a small balance at openrouter.ai/settings/credits, pick a cheaper model (e.g. openai/gpt-4o-mini), or use the zero-setup demo — no key needed.");
+    }
+    if(!r.ok){ var terr=await r.text(); throw new Error("OpenRouter "+r.status+": "+terr.slice(0,300)); }
+    res=r;
+  }
+  if(!res) throw new Error("Request too large for your current OpenRouter credits — try a cheaper model or demo mode.");
   var reader=res.body.getReader(), dec=new TextDecoder(), buf="", textSpan=null, full="", calls={};
   while(true){
     var r=await reader.read(); if(r.done) break;
