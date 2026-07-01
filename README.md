@@ -1,5 +1,10 @@
 # Lumen
 
+[![PyPI](https://img.shields.io/pypi/v/lumen-code?color=F4B740&label=pypi)](https://pypi.org/project/lumen-code/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-4FD1C5)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-A99C82)](LICENSE)
+[![models](https://img.shields.io/badge/models-local%20%2B%20OpenRouter-F4B740)](https://openrouter.ai/models)
+
 **A privacy-first coding harness.** Run local LLMs offline, or bring your own OpenRouter key for the full catalogue. Your code never leaves your machine when you don't want it to.
 
 Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal coding assistant. Point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire model catalogue with a key you control. One interface, both worlds.
