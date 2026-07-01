@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, max-age=0">
 <title>Lumen Web — a privacy-first coding agent in your browser</title>
 <meta name="description" content="An agentic coding assistant that runs entirely in your browser. Zero-setup demo, or bring your own OpenRouter key. Your code and key never touch a server.">
 <style>
@@ -425,13 +426,33 @@ async function callOpenRouter(messages, onFirst){
   return {content:full,tool_calls:toolCalls};
 }
 
+function setAirgap(on){
+  airgap=!!on;
+  var b=document.getElementById("airgapBtn");
+  if(b){ b.classList.toggle("on",airgap); b.textContent=airgap?"🔒 airgap: ON":"🔒 airgap: off"; }
+}
+
 async function runReal(userText){
   history.push({role:"user",content:userText});
+  await driveReal();
+}
+
+async function driveReal(){
   var t0=Date.now();
   for(var iter=0; iter<12; iter++){
     var msgs;
     try{ msgs=await guard(toApiMessages(history)); }
-    catch(g){ if(g.guard==="airgap"){ addBanner("✗ Airgap is ON — refusing to contact the cloud. Nothing left your browser. Toggle airgap off to go live.","block"); } return; }
+    catch(g){
+      if(g.guard==="airgap"){
+        var ab=addBanner('✗ <b>Airgap is ON</b> — refusing to contact the cloud. Nothing left your browser.<div class="btns"><button class="safe" id="agoff">▶ Turn airgap off &amp; go live</button></div>',"block");
+        var btn=ab.querySelector("#agoff");
+        btn.onclick=async function(){ if(busy) return; btn.disabled=true; setAirgap(false);
+          busy=true; $("#send").disabled=true;
+          try{ await driveReal(); }catch(e){ addBanner("✗ "+esc(e.message||e),"block"); }
+          busy=false; $("#send").disabled=false; };
+      }
+      return;
+    }
     var out, thinking=addThinking();
     try{ out=await callOpenRouter(msgs, function(){ thinking.remove(); }); }
     catch(e){ thinking.remove(); addBanner("✗ "+esc(e.message||e),"block"); return; }
@@ -536,9 +557,8 @@ CHIPS.forEach(function(c){ var b=document.createElement("button"); b.className="
 
 $("#autoBtn").onclick=function(){ autoApprove=!autoApprove; this.classList.toggle("on",autoApprove);
   this.textContent=(autoApprove?"✓ auto-approve":"▢ review each change"); };
-$("#airgapBtn").onclick=function(){ airgap=!airgap; this.classList.toggle("on",airgap);
-  this.textContent=airgap?"🔒 airgap: ON":"🔒 airgap: off";
-  addBanner(airgap?"🔒 Airgap ENGAGED — all network is blocked. Local/demo still works; the cloud is now unreachable.":"Airgap off — network allowed again.",airgap?"guard":"guard"); };
+$("#airgapBtn").onclick=function(){ setAirgap(!airgap);
+  addBanner(airgap?"🔒 <b>Airgap ENGAGED</b> — all network is blocked. Local/demo still works; the cloud is now unreachable.":"Airgap off — the cloud is allowed again. Press Send to go live.",airgap?"block":"guard"); };
 
 $("#keyBtn").onclick=function(){ $("#keyInput").value=apiKey||""; $("#modelInput").value=model; $("#keyModal").classList.add("show"); $("#keyInput").focus(); };
 $("#keyCancel").onclick=function(){ $("#keyModal").classList.remove("show"); };
@@ -550,6 +570,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 7 loaded · airgap default OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 var intro=addAssistant();
 intro.innerHTML='I’m an AI coding agent running <b>entirely in your browser</b> — your code and key never touch a server. Try a task below (zero setup), or connect your own OpenRouter key to go live. Watch me edit the files on the left, then hit <b>▶ Run / Preview</b>.';
