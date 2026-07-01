@@ -9,17 +9,9 @@
 
 Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal coding assistant. Point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire model catalogue with a key you control. One interface, both worlds.
 
-```
-┌────────────────────────────────────────┐
-│ LUMEN  privacy-first coding harness      │
-│                                          │
-│ provider  local                          │
-│ model     qwen3-coder:30b                │
-│ mode      offline · code never leaves    │
-│           this machine                   │
-│ approval  prompt before writes / shell   │
-└────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="docs/demo.svg" alt="Lumen — animated demo: offline build, diff + undo, airgap mode, Secret Guard, model catalogue" width="860">
+</p>
 
 ## Why
 
