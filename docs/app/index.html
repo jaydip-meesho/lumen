@@ -154,6 +154,7 @@
     <div class="tabs">
       <button class="tab active" data-view="files">Files</button>
       <button class="tab" data-view="preview">Preview</button>
+      <button class="tab" data-view="cli">▶ Offline (CLI)</button>
       <button class="runbtn" id="resetBtn" style="background:none;color:var(--muted);border:1px solid var(--line);margin-right:8px">↺ Reset project</button>
       <button class="runbtn" id="runBtn">▶ Run / Preview</button>
     </div>
@@ -163,6 +164,16 @@
     </div>
     <div class="view" id="previewView">
       <iframe id="preview" title="Live preview" sandbox="allow-scripts"></iframe>
+    </div>
+    <div class="view" id="cliView">
+      <div style="padding:14px 16px;overflow:auto;flex:1;min-height:0">
+        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px">
+          Recording of the Lumen <b style="color:var(--fg)">CLI</b> — fully offline, with <b style="color:var(--safe)">airgap</b> blocking all network at the OS socket layer.
+          A browser can't run a local model or patch sockets, so this is the local/airgap capability shown as a recording (not interactive).
+        </div>
+        <img src="../cli-offline.svg" alt="Lumen CLI running fully offline; airgap blocks network at the socket layer"
+             style="width:100%;display:block;border:1px solid var(--line);border-radius:12px">
+      </div>
     </div>
   </section>
 
@@ -561,7 +572,8 @@ var history=[];
 
 /* ---------------- wiring ---------------- */
 function showView(v){ document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.getAttribute("data-view")===v);});
-  $("#filesView").classList.toggle("active",v==="files"); $("#previewView").classList.toggle("active",v==="preview"); }
+  $("#filesView").classList.toggle("active",v==="files"); $("#previewView").classList.toggle("active",v==="preview");
+  $("#cliView").classList.toggle("active",v==="cli"); }
 document.querySelectorAll(".tab").forEach(function(t){ t.onclick=function(){ var v=t.getAttribute("data-view"); showView(v); if(v==="preview")refreshPreview(); }; });
 $("#runBtn").onclick=function(){ refreshPreview(); showView("preview"); };
 $("#resetBtn").onclick=function(){ resetVFS(); showView("files"); addStat("↺ project reset to its starting state"); };
@@ -588,7 +600,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 8 loaded · idempotent demo · real Secret Guard · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 9 loaded · Offline-CLI recording tab · idempotent demo · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 var intro=addAssistant();
 intro.innerHTML='I’m an AI coding agent running <b>entirely in your browser</b> — your code and key never touch a server. Try a task below (zero setup), or connect your own OpenRouter key to go live. Watch me edit the files on the left, then hit <b>▶ Run / Preview</b>.';
