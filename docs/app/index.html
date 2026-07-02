@@ -144,7 +144,7 @@
   <span class="brand"><span class="dot"></span>lumen<small>web</small></span>
   <span class="pill demo" id="modePill"><span class="led"></span><span id="modeText">demo mode</span></span>
   <span class="grow"></span>
-  <button class="hbtn" id="airgapBtn" title="Block all network — provable privacy">🔒 airgap: off</button>
+  <button class="hbtn" id="airgapBtn" title="Refuse all cloud calls in-browser — the Lumen CLI enforces this at the OS socket layer">🔒 airgap: off</button>
   <button class="hbtn" id="keyBtn">⚙ connect key</button>
   <a class="hbtn" href="https://github.com/jaydip-meesho/lumen" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
 </header>
@@ -154,6 +154,7 @@
     <div class="tabs">
       <button class="tab active" data-view="files">Files</button>
       <button class="tab" data-view="preview">Preview</button>
+      <button class="runbtn" id="resetBtn" style="background:none;color:var(--muted);border:1px solid var(--line);margin-right:8px">↺ Reset project</button>
       <button class="runbtn" id="runBtn">▶ Run / Preview</button>
     </div>
     <div class="view active" id="filesView">
@@ -218,6 +219,10 @@ var VFS = {
 "# Counter\nA tiny demo project for Lumen Web. Ask the agent to change it, then hit Run / Preview.\n"
 };
 var currentFile = "app.js";
+var INITIAL_VFS = JSON.parse(JSON.stringify(VFS));
+function resetVFS(){ VFS = JSON.parse(JSON.stringify(INITIAL_VFS));
+  if(VFS[currentFile]==null) currentFile="app.js";
+  tree(); $("#editor").value=VFS[currentFile]||""; refreshPreview(); }
 
 /* ---------------- tools ---------------- */
 function tree(){
@@ -495,14 +500,20 @@ var DEMO={
     {say:"Let me read the environment file."},
     {tool:"read_file",args:{path:".env"}},
     {guard:true},
-    {done:"I stopped: your .env holds real secrets and this is a demo of the cloud path. Lumen's Secret Guard blocks keys from ever leaving your machine — so I won't hard-code or transmit them. In local mode this check isn't even needed, because nothing leaves at all."}
+    {done:"I stopped: your .env holds real secrets and this is the cloud path. Lumen's Secret Guard blocks keys from ever leaving — so I won't hard-code or transmit them. In local mode this check isn't even needed, because nothing leaves at all."}
+  ],
+  "make it light mode":[
+    {say:"I'll switch the counter to a light theme."},
+    {tool:"edit_file",args:{path:"style.css",old_string:"background:#14110C;color:#F1E9D8",new_string:"background:#F5F1E8;color:#241F16"}},
+    {done:"Switched to a light theme. Hit ▶ Run / Preview to see it."}
   ]
 };
 function fuzzyDemo(text){
   var t=text.toLowerCase();
+  if(/\.env|secret|api key|key into|leak|credential/.test(t)) return DEMO["read .env and put the api key into app.js"];
   if(/reset/.test(t)) return DEMO["add a reset button to the counter"];
   if(/step|by 5|increment|faster/.test(t)) return DEMO["make the counter step by 5"];
-  if(/\.env|secret|api key|key into|leak/.test(t)) return DEMO["read .env and put the api key into app.js"];
+  if(/light|dark|theme|colou?r|background/.test(t)) return DEMO["make it light mode"];
   return null;
 }
 function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
@@ -512,20 +523,26 @@ async function runDemo(userText){
   var script=fuzzyDemo(userText);
   if(!script){
     var s=addAssistant();
-    await typeInto(s,"That one needs a live model. Click “⚙ connect key” to go live with your own OpenRouter key (free to create), or try one of the demo tasks below — they run with zero setup and really edit the files on the left.");
+    await typeInto(s,"That one needs a live model — click “⚙ connect key” to go live with your own OpenRouter key (free to create). Or try a demo task below: they run with zero setup and really edit the files on the left.");
     return;
   }
-  var t0=Date.now();
+  resetVFS();  // each demo starts from the pristine project, so chips are always idempotent
+  var t0=Date.now(), failed=false;
   for(var i=0;i<script.length;i++){ var step=script[i];
     if(step.say){ var s=addAssistant(); await typeInto(s,step.say); await sleep(250); }
-    else if(step.done){ var d=addAssistant(); await typeInto(d,step.done); addStat(((Date.now()-t0)/1000).toFixed(1)+"s · demo (no network)"); }
+    else if(step.done){ var d=addAssistant();
+      await typeInto(d, failed ? "That edit couldn't apply cleanly — click ↺ Reset project and try again." : step.done);
+      addStat(((Date.now()-t0)/1000).toFixed(1)+"s · demo (no network)"); }
     else if(step.guard){
-      addBanner('<b>🛡 Secret Guard</b> — 2 secret(s) detected in <b>.env</b> heading for the cloud.<div class="secrets">• <b>OpenRouter API key</b> sk-… 7c (48 chars)<br>• <b>AWS access key id</b> AKI…42 (20 chars)</div><div class="stat">✗ Blocked — nothing was sent. In local mode this never even runs.</div>',"guard");
+      var hits=scanSecrets(VFS[".env"]||"");
+      var list=hits.map(function(h){return "• <b>"+esc(h.kind)+"</b> "+esc(h.masked);}).join("<br>") || "(none)";
+      addBanner('<b>🛡 Secret Guard</b> — '+hits.length+' secret(s) found in <b>.env</b> that would be sent to the cloud.<div class="secrets">'+list+'</div><div class="stat">✗ Blocked — nothing was sent. (This ran the real scanner over the file; in local mode it never even runs.)</div>',"guard");
       await sleep(400);
     }
     else if(step.tool){ addToolLine(step.tool,step.args); await sleep(200);
       var res=await runTool(step.tool,step.args,log);
-      if(step.tool==="read_file"||step.tool==="list_dir") addResult(res);
+      if(String(res).indexOf("Error")===0){ failed=true; addResult(res); }
+      else if(step.tool==="read_file"||step.tool==="list_dir") addResult(res);
       await sleep(300);
     }
   }
@@ -547,18 +564,19 @@ function showView(v){ document.querySelectorAll(".tab").forEach(function(t){t.cl
   $("#filesView").classList.toggle("active",v==="files"); $("#previewView").classList.toggle("active",v==="preview"); }
 document.querySelectorAll(".tab").forEach(function(t){ t.onclick=function(){ var v=t.getAttribute("data-view"); showView(v); if(v==="preview")refreshPreview(); }; });
 $("#runBtn").onclick=function(){ refreshPreview(); showView("preview"); };
+$("#resetBtn").onclick=function(){ resetVFS(); showView("files"); addStat("↺ project reset to its starting state"); };
 
 $("#send").onclick=function(){ send($("#input").value); };
 $("#input").addEventListener("keydown",function(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); send(this.value); } });
 
-var CHIPS=["add a reset button","make the counter step by 5","read .env and put the api key into app.js"];
+var CHIPS=["read .env and put the api key into app.js","add a reset button","make the counter step by 5","make it light mode"];
 var chipWrap=$("#chips");
 CHIPS.forEach(function(c){ var b=document.createElement("button"); b.className="chip"; b.textContent=c; b.onclick=function(){ send(c); }; chipWrap.appendChild(b); });
 
 $("#autoBtn").onclick=function(){ autoApprove=!autoApprove; this.classList.toggle("on",autoApprove);
   this.textContent=(autoApprove?"✓ auto-approve":"▢ review each change"); };
 $("#airgapBtn").onclick=function(){ setAirgap(!airgap);
-  addBanner(airgap?"🔒 <b>Airgap ENGAGED</b> — all network is blocked. Local/demo still works; the cloud is now unreachable.":"Airgap off — the cloud is allowed again. Press Send to go live.",airgap?"block":"guard"); };
+  addBanner(airgap?"🔒 <b>Airgap ENGAGED</b> — Lumen will refuse every cloud call. (The CLI enforces this at the OS socket layer, so nothing can leave even by accident.)":"Airgap off — the cloud is allowed again. Press Send to go live.",airgap?"block":"guard"); };
 
 $("#keyBtn").onclick=function(){ $("#keyInput").value=apiKey||""; $("#modelInput").value=model; $("#keyModal").classList.add("show"); $("#keyInput").focus(); };
 $("#keyCancel").onclick=function(){ $("#keyModal").classList.remove("show"); };
@@ -570,7 +588,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 7 loaded · airgap default OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 8 loaded · idempotent demo · real Secret Guard · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 var intro=addAssistant();
 intro.innerHTML='I’m an AI coding agent running <b>entirely in your browser</b> — your code and key never touch a server. Try a task below (zero setup), or connect your own OpenRouter key to go live. Watch me edit the files on the left, then hit <b>▶ Run / Preview</b>.';
