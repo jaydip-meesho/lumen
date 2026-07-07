@@ -143,7 +143,9 @@
 <header>
   <span class="brand"><span class="dot"></span>lumen<small>web</small></span>
   <span class="pill demo" id="modePill"><span class="led"></span><span id="modeText">demo mode</span></span>
+  <span class="pill demo" id="egress" title="Total bytes Lumen has sent to any cloud this session"><span class="led"></span>🔒 0 B left your machine</span>
   <span class="grow"></span>
+  <button class="hbtn" id="localBtn" title="Run a local model via Ollama — nothing leaves your machine">🖥 local: off</button>
   <button class="hbtn" id="airgapBtn" title="Refuse all cloud calls in-browser — the Lumen CLI enforces this at the OS socket layer">🔒 airgap: off</button>
   <button class="hbtn" id="keyBtn">⚙ connect key</button>
   <a class="hbtn" href="https://github.com/jaydip-meesho/lumen" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
@@ -154,7 +156,7 @@
     <div class="tabs">
       <button class="tab active" data-view="files">Files</button>
       <button class="tab" data-view="preview">Preview</button>
-      <button class="tab" data-view="cli">▶ Offline (CLI)</button>
+      <button class="runbtn" id="dlBtn" style="background:none;color:var(--muted);border:1px solid var(--line);margin-right:8px">⬇ Download</button>
       <button class="runbtn" id="resetBtn" style="background:none;color:var(--muted);border:1px solid var(--line);margin-right:8px">↺ Reset project</button>
       <button class="runbtn" id="runBtn">▶ Run / Preview</button>
     </div>
@@ -164,16 +166,6 @@
     </div>
     <div class="view" id="previewView">
       <iframe id="preview" title="Live preview" sandbox="allow-scripts"></iframe>
-    </div>
-    <div class="view" id="cliView">
-      <div style="padding:14px 16px;overflow:auto;flex:1;min-height:0">
-        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px">
-          Recording of the Lumen <b style="color:var(--fg)">CLI</b> — fully offline, with <b style="color:var(--safe)">airgap</b> blocking all network at the OS socket layer.
-          A browser can't run a local model or patch sockets, so this is the local/airgap capability shown as a recording (not interactive).
-        </div>
-        <img src="../cli-offline.svg" alt="Lumen CLI running fully offline; airgap blocks network at the socket layer"
-             style="width:100%;display:block;border:1px solid var(--line);border-radius:12px">
-      </div>
     </div>
   </section>
 
@@ -378,10 +370,34 @@ function addBanner(html,cls){ var d=document.createElement("div"); d.className="
 /* ---------------- state ---------------- */
 var autoApprove=true, airgap=false, apiKey=null, model="openai/gpt-4o-mini";
 var busy=false, ackSecrets={};
+var localBase="http://localhost:11434/v1", localModel=null, localAvailable=false, useLocal=false;
+var cloudBytes=0, sessTokens=0, sessCost=0;
 try{ apiKey=localStorage.getItem("lumen_key")||null; var mm=localStorage.getItem("lumen_model"); if(mm)model=mm; }catch(e){}
-function setMode(){ var live=!!apiKey; var pill=$("#modePill"), t=$("#modeText");
-  pill.className="pill "+(live?"live":"demo"); t.textContent=live?("live · "+model.split("/").pop()):"demo mode";
-  $("#keyBtn").textContent=live?"⚙ connected":"⚙ connect key"; }
+
+// which backend a request would use right now
+function activeBackend(){
+  if(useLocal && localAvailable) return {mode:"local", base:localBase, key:"ollama", model:localModel, cloud:false};
+  if(apiKey) return {mode:"openrouter", base:"https://openrouter.ai/api/v1", key:apiKey, model:model, cloud:true};
+  return {mode:"demo", cloud:false};
+}
+function fmtBytes(n){ return n<1024 ? n+" B" : (n/1024).toFixed(1)+" KB"; }
+function updateEgress(){ var e=$("#egress"); if(!e) return;
+  if(cloudBytes<=0){ e.className="pill demo"; e.innerHTML='<span class="led"></span>🔒 0 B left your machine'; }
+  else { e.className="pill live"; e.innerHTML='<span class="led"></span>↑ '+fmtBytes(cloudBytes)+' sent to cloud'; } }
+function setMode(){ var be=activeBackend(), pill=$("#modePill"), t=$("#modeText");
+  if(be.mode==="local"){ pill.className="pill demo"; t.textContent="local · "+(localModel||"ollama")+" · offline"; }
+  else if(be.mode==="openrouter"){ pill.className="pill live"; t.textContent="live · "+model.split("/").pop(); }
+  else { pill.className="pill demo"; t.textContent="demo mode"; }
+  $("#keyBtn").textContent=apiKey?"⚙ connected":"⚙ connect key"; updateEgress(); }
+function setLocalBtn(){ var b=$("#localBtn"); if(!b) return; var on=useLocal&&localAvailable;
+  b.classList.toggle("on",on); b.textContent=on?("🖥 local: "+(localModel||"on")):"🖥 local: off"; }
+async function detectLocal(){
+  try{ var c=new AbortController(), to=setTimeout(function(){c.abort();},1500);
+    var r=await fetch(localBase+"/models",{signal:c.signal}); clearTimeout(to);
+    if(r.ok){ var j=await r.json(); var ms=(j.data||[]).map(function(m){return m.id;});
+      if(ms.length){ localAvailable=true; if(!localModel) localModel=ms.filter(function(x){return /coder|code|qwen|llama|deepseek|mistral/i.test(x);})[0]||ms[0]; } } }
+  catch(e){ localAvailable=false; }
+  return localAvailable; }
 setMode();
 
 /* ---------------- system prompt + real agent loop (OpenRouter) ---------------- */
@@ -390,7 +406,9 @@ var SYSTEM="You are Lumen, a coding agent working on a small web project IN THE 
 function toApiMessages(history){ return [{role:"system",content:SYSTEM}].concat(history); }
 
 async function guard(msgs){
-  if(airgap) throw {guard:"airgap"};
+  var be=activeBackend();
+  if(airgap && be.cloud) throw {guard:"airgap"};
+  if(!be.cloud) return msgs;   // local / demo: nothing leaves the machine — no scan needed
   var hits=scanMessages(msgs).filter(function(h){ return !ackSecrets[h.kind+"|"+h.masked]; });
   if(!hits.length) return msgs;
   return await new Promise(function(resolve,reject){
@@ -406,32 +424,36 @@ async function guard(msgs){
   });
 }
 
-async function callOpenRouter(messages, onFirst){
-  var maxTok=2048, res=null;
+async function callModel(messages, onFirst){
+  var be=activeBackend();
+  var maxTok=2048, res=null, body="";
   for(var attempt=0; attempt<4 && !res; attempt++){
-    var r=await fetch("https://openrouter.ai/api/v1/chat/completions",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey,
-        "HTTP-Referer":location.origin,"X-Title":"Lumen Web"},
-      body:JSON.stringify({model:model,messages:messages,tools:TOOLS_SCHEMA,tool_choice:"auto",stream:true,temperature:0,max_tokens:maxTok})
-    });
-    if(r.status===402){
-      var t402=await r.text(); var mm=t402.match(/afford\s+(\d+)/);
-      if(mm){ var aff=parseInt(mm[1],10)-200; if(aff>=256 && aff<maxTok){ maxTok=aff; continue; } }
-      throw new Error("Out of OpenRouter credits for this request. Add a small balance at openrouter.ai/settings/credits, pick a cheaper model (e.g. openai/gpt-4o-mini), or use the zero-setup demo — no key needed.");
-    }
-    if(!r.ok){ var terr=await r.text(); throw new Error("OpenRouter "+r.status+": "+terr.slice(0,300)); }
+    var payload={model:be.model,messages:messages,tools:TOOLS_SCHEMA,tool_choice:"auto",stream:true,temperature:0,max_tokens:maxTok,stream_options:{include_usage:true}};
+    if(be.cloud) payload.usage={include:true};
+    body=JSON.stringify(payload);
+    var headers={"Content-Type":"application/json"};
+    if(be.key) headers["Authorization"]="Bearer "+be.key;
+    if(be.cloud){ headers["HTTP-Referer"]=location.origin; headers["X-Title"]="Lumen Web"; }
+    var r;
+    try{ r=await fetch(be.base+"/chat/completions",{method:"POST",headers:headers,body:body}); }
+    catch(e){ throw new Error(be.cloud ? ("Could not reach OpenRouter: "+(e.message||e)) : ("Could not reach local Ollama. Start it with:  OLLAMA_ORIGINS='"+location.origin+"' ollama serve")); }
+    if(r.status===402){ var t402=await r.text(); var af=t402.match(/afford\s+(\d+)/);
+      if(af){ var aff=parseInt(af[1],10)-200; if(aff>=256 && aff<maxTok){ maxTok=aff; continue; } }
+      throw new Error("Out of OpenRouter credits for this request. Add a small balance at openrouter.ai/settings/credits, pick a cheaper model, switch to a local model, or use the zero-setup demo."); }
+    if(!r.ok){ var terr=await r.text(); throw new Error(be.mode+" "+r.status+": "+terr.slice(0,300)); }
     res=r;
   }
-  if(!res) throw new Error("Request too large for your current OpenRouter credits — try a cheaper model or demo mode.");
-  var reader=res.body.getReader(), dec=new TextDecoder(), buf="", textSpan=null, full="", calls={};
+  if(!res) throw new Error("Request too large for your current credits — try a cheaper model, local, or demo.");
+  if(be.cloud){ cloudBytes+=body.length; updateEgress(); }
+  var reader=res.body.getReader(), dec=new TextDecoder(), buf="", textSpan=null, full="", calls={}, usage=null;
   while(true){
-    var r=await reader.read(); if(r.done) break;
-    buf+=dec.decode(r.value,{stream:true});
+    var rd=await reader.read(); if(rd.done) break;
+    buf+=dec.decode(rd.value,{stream:true});
     var parts=buf.split("\n"); buf=parts.pop();
-    for(var i=0;i<parts.length;i++){ var line=parts[i].trim(); if(!line.indexOf(":")&&line[0]===":")continue;
+    for(var i=0;i<parts.length;i++){ var line=parts[i].trim();
       if(line.indexOf("data:")!==0) continue; var data=line.slice(5).trim(); if(data==="[DONE]") continue;
       var chunk; try{chunk=JSON.parse(data);}catch(e){continue;}
+      if(chunk.usage) usage=chunk.usage;
       var ch=(chunk.choices||[])[0]; if(!ch) continue; var d=ch.delta||{};
       if(d.content){ if(onFirst){onFirst();onFirst=null;} if(!textSpan) textSpan=addAssistant(); full+=d.content; textSpan.textContent=full; scrollLog(); }
       (d.tool_calls||[]).forEach(function(tc){ if(onFirst){onFirst();onFirst=null;} var idx=tc.index||0; var slot=calls[idx]||(calls[idx]={id:null,name:"",args:""});
@@ -439,7 +461,7 @@ async function callOpenRouter(messages, onFirst){
     }
   }
   var toolCalls=Object.keys(calls).sort().map(function(k){var s=calls[k];return {id:s.id||("call_"+k),type:"function",function:{name:s.name,arguments:s.args||"{}"}};}).filter(function(c){return c.function.name;});
-  return {content:full,tool_calls:toolCalls};
+  return {content:full, tool_calls:toolCalls, usage:usage};
 }
 
 function setAirgap(on){
@@ -451,6 +473,17 @@ function setAirgap(on){
 async function runReal(userText){
   history.push({role:"user",content:userText});
   await driveReal();
+}
+
+function turnStat(t0, usage){
+  var be=activeBackend();
+  var tok = usage ? ((usage.prompt_tokens||0)+(usage.completion_tokens||0)) : 0;
+  var cost = (usage && typeof usage.cost==="number") ? usage.cost : 0;
+  if(tok) sessTokens+=tok; if(cost) sessCost+=cost;
+  return ((Date.now()-t0)/1000).toFixed(1)+"s"
+    + (tok?(" · "+tok.toLocaleString()+" tok"):"")
+    + (be.cloud ? (" · $"+(cost||0).toFixed(4)) : " · $0 · fully local")
+    + " · "+be.model;
 }
 
 async function driveReal(){
@@ -470,7 +503,7 @@ async function driveReal(){
       return;
     }
     var out, thinking=addThinking();
-    try{ out=await callOpenRouter(msgs, function(){ thinking.remove(); }); }
+    try{ out=await callModel(msgs, function(){ thinking.remove(); }); }
     catch(e){ thinking.remove(); addBanner("✗ "+esc(e.message||e),"block"); return; }
     thinking.remove();
     var asMsg={role:"assistant",content:out.content||null};
@@ -478,7 +511,7 @@ async function driveReal(){
     history.push(asMsg);
     if(!out.tool_calls.length){
       if(!out.content){ var em=addAssistant(); em.textContent="(the model returned an empty response — press Send to retry, or switch model via ⚙ connect key)"; }
-      addStat(((Date.now()-t0)/1000).toFixed(1)+"s · "+model); return;
+      addStat(turnStat(t0, out.usage)); return;
     }
     for(var j=0;j<out.tool_calls.length;j++){ var tc=out.tool_calls[j], args={};
       try{args=JSON.parse(tc.function.arguments||"{}");}catch(e){}
@@ -564,7 +597,7 @@ async function send(text){
   text=(text||"").trim(); if(!text||busy) return;
   busy=true; $("#send").disabled=true;
   addUser(text); $("#input").value="";
-  try{ if(apiKey && !airgap) await runReal(text); else if(apiKey && airgap){ await runReal(text); } else await runDemo(text); }
+  try{ if(activeBackend().mode==="demo") await runDemo(text); else await runReal(text); }
   catch(e){ addBanner("✗ "+esc(e.message||String(e)),"block"); }
   busy=false; $("#send").disabled=false; $("#input").focus();
 }
@@ -572,11 +605,21 @@ var history=[];
 
 /* ---------------- wiring ---------------- */
 function showView(v){ document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.getAttribute("data-view")===v);});
-  $("#filesView").classList.toggle("active",v==="files"); $("#previewView").classList.toggle("active",v==="preview");
-  $("#cliView").classList.toggle("active",v==="cli"); }
+  $("#filesView").classList.toggle("active",v==="files"); $("#previewView").classList.toggle("active",v==="preview"); }
 document.querySelectorAll(".tab").forEach(function(t){ t.onclick=function(){ var v=t.getAttribute("data-view"); showView(v); if(v==="preview")refreshPreview(); }; });
 $("#runBtn").onclick=function(){ refreshPreview(); showView("preview"); };
 $("#resetBtn").onclick=function(){ resetVFS(); showView("files"); addStat("↺ project reset to its starting state"); };
+$("#dlBtn").onclick=function(){ var blob=new Blob([buildPreviewDoc()],{type:"text/html"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="lumen-app.html"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+  addStat("⬇ downloaded lumen-app.html — your built app, self-contained"); };
+$("#localBtn").onclick=async function(){
+  if(!localAvailable){ addStat("looking for a local model…"); await detectLocal(); setLocalBtn(); }
+  if(!localAvailable){
+    addBanner("🖥 <b>No local model detected.</b> Start <b>Ollama</b> with a coding model pulled, and allow this page's origin:<div class=\"secrets\">OLLAMA_ORIGINS='"+esc(location.origin)+"' ollama serve</div>Then click 🖥 local again. (Local mode runs the model on your machine — nothing leaves at all.)","guard");
+    return; }
+  useLocal=!useLocal; setLocalBtn(); setMode();
+  addBanner(useLocal?("🖥 <b>Local mode ON</b> — running <b>"+esc(localModel)+"</b> on your machine via Ollama. Nothing leaves — not even to OpenRouter. This is the real thing, not a recording."):"Local mode off.","guard"); };
 
 $("#send").onclick=function(){ send($("#input").value); };
 $("#input").addEventListener("keydown",function(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); send(this.value); } });
@@ -600,10 +643,12 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 9 loaded · Offline-CLI recording tab · idempotent demo · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 10 loaded · local(Ollama) mode · egress monitor · cost meter · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
+// probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
+detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });
 var intro=addAssistant();
-intro.innerHTML='I’m an AI coding agent running <b>entirely in your browser</b> — your code and key never touch a server. Try a task below (zero setup), or connect your own OpenRouter key to go live. Watch me edit the files on the left, then hit <b>▶ Run / Preview</b>.';
+intro.innerHTML='I’m an AI coding agent running <b>entirely in your browser</b> — your code and key never touch a server (watch the <b>“left your machine”</b> meter up top stay at 0). Try a demo task below with zero setup, connect your own <b>OpenRouter</b> key, or point me at a <b>local model (🖥)</b> to run fully offline. Then hit <b>▶ Run / Preview</b>.';
 scrollLog();
 })();
 </script>
