@@ -217,7 +217,7 @@ var VFS = {
   "style.css":
 "body{font-family:system-ui,sans-serif;background:#14110C;color:#F1E9D8;display:grid;place-items:center;height:100vh;margin:0}\n.app{text-align:center}\nh1{font-weight:800;letter-spacing:-.02em}\n.count{font-size:72px;color:#F4B740;margin:12px 0;font-variant-numeric:tabular-nums}\n.controls{display:flex;gap:10px;justify-content:center}\nbutton{font-size:22px;width:52px;height:52px;border-radius:12px;border:1px solid #332B20;background:#1E1A13;color:#F1E9D8;cursor:pointer}\nbutton:hover{border-color:#F4B740}\n",
   ".env":
-"# local secrets — should NEVER be sent to a cloud model\nOPENROUTER_API_KEY=sk-or-v1-3f9a2b7c8d1e4f6a9b0c2d5e8f1a4b7c\nAWS_ACCESS_KEY_ID=AKIA5X7QMEXAMPLE42\n",
+"# local secrets — should NEVER be sent to a cloud model\nOPENROUTER_API_KEY=sk-or-v1-3f9a2b7c8d1e4f6a9b0c2d5e8f1a4b7c\nAWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\n",
   "README.md":
 "# Counter\nA tiny demo project for Lumen Web. Ask the agent to change it, then hit Run / Preview.\n"
 };
@@ -352,7 +352,14 @@ function redactMessages(msgs){
   });
 }
 function redact(text){
-  SECRET_PATTERNS.forEach(function(pp){ text=text.replace(pp[1], function(full){ return "‹redacted "+pp[0]+"›"; }); });
+  if(!text) return text;
+  var m, matches=[], taken=[];
+  SECRET_PATTERNS.forEach(function(pp){ var re=pp[1]; re.lastIndex=0;
+    while((m=re.exec(text))){ var a=m.index, b=re.lastIndex;
+      if(!taken.some(function(t){return a<t[1]&&b>t[0];})){ taken.push([a,b]); matches.push({a:a,b:b,kind:pp[0]}); } }
+  });
+  matches.sort(function(x,y){return y.a-x.a;});  // splice from the end so earlier indices stay valid
+  matches.forEach(function(x){ text=text.slice(0,x.a)+"‹redacted "+x.kind+"›"+text.slice(x.b); });
   return text;
 }
 
@@ -416,9 +423,9 @@ async function guard(msgs){
     var b=addBanner('<b>🛡 Secret Guard</b> — '+hits.length+' secret(s) about to be sent to <b>'+esc(model)+'</b> (cloud).<div class="secrets">'+list+'</div><div class="btns"><button class="safe" data-a="redact">Redact &amp; send</button><button data-a="send">Send anyway</button><button data-a="cancel">Cancel</button></div>',"guard");
     b.querySelectorAll("button").forEach(function(btn){ btn.onclick=function(){
       var a=btn.getAttribute("data-a"); b.querySelector(".btns").remove();
-      hits.forEach(function(h){ ackSecrets[h.kind+"|"+h.masked]=1; });
-      if(a==="cancel"){ b.innerHTML+='<div class="stat">✗ Cancelled — nothing was sent.</div>'; reject({guard:"cancel"}); }
-      else if(a==="redact"){ b.innerHTML+='<div class="stat">✓ Redacting secrets before sending…</div>'; resolve(redactMessages(msgs)); }
+      if(a==="cancel"){ b.innerHTML+='<div class="stat">✗ Cancelled — nothing was sent.</div>'; reject({guard:"cancel"}); return; }
+      hits.forEach(function(h){ ackSecrets[h.kind+"|"+h.masked]=1; });  // only acknowledge on paths that actually send
+      if(a==="redact"){ b.innerHTML+='<div class="stat">✓ Redacting secrets before sending…</div>'; resolve(redactMessages(msgs)); }
       else { b.innerHTML+='<div class="stat">Sending as-is…</div>'; resolve(msgs); }
     };});
   });
@@ -437,6 +444,7 @@ async function callModel(messages, onFirst){
     var r;
     try{ r=await fetch(be.base+"/chat/completions",{method:"POST",headers:headers,body:body}); }
     catch(e){ throw new Error(be.cloud ? ("Could not reach OpenRouter: "+(e.message||e)) : ("Could not reach local Ollama. Start it with:  OLLAMA_ORIGINS='"+location.origin+"' ollama serve")); }
+    if(be.cloud){ cloudBytes += new TextEncoder().encode(body).length; updateEgress(); }  // count every body actually transmitted (incl. 402 retries)
     if(r.status===402){ var t402=await r.text(); var af=t402.match(/afford\s+(\d+)/);
       if(af){ var aff=parseInt(af[1],10)-200; if(aff>=256 && aff<maxTok){ maxTok=aff; continue; } }
       throw new Error("Out of OpenRouter credits for this request. Add a small balance at openrouter.ai/settings/credits, pick a cheaper model, switch to a local model, or use the zero-setup demo."); }
@@ -444,7 +452,6 @@ async function callModel(messages, onFirst){
     res=r;
   }
   if(!res) throw new Error("Request too large for your current credits — try a cheaper model, local, or demo.");
-  if(be.cloud){ cloudBytes+=body.length; updateEgress(); }
   var reader=res.body.getReader(), dec=new TextDecoder(), buf="", textSpan=null, full="", calls={}, usage=null;
   while(true){
     var rd=await reader.read(); if(rd.done) break;
@@ -460,7 +467,7 @@ async function callModel(messages, onFirst){
         if(tc.id)slot.id=tc.id; if(tc.function){ if(tc.function.name)slot.name+=tc.function.name; if(tc.function.arguments)slot.args+=tc.function.arguments; } });
     }
   }
-  var toolCalls=Object.keys(calls).sort().map(function(k){var s=calls[k];return {id:s.id||("call_"+k),type:"function",function:{name:s.name,arguments:s.args||"{}"}};}).filter(function(c){return c.function.name;});
+  var toolCalls=Object.keys(calls).map(Number).sort(function(a,b){return a-b;}).map(function(k){var s=calls[k];return {id:s.id||("call_"+k),type:"function",function:{name:s.name,arguments:s.args||"{}"}};}).filter(function(c){return c.function.name;});
   return {content:full, tool_calls:toolCalls, usage:usage};
 }
 
@@ -478,11 +485,11 @@ async function runReal(userText){
 function turnStat(t0, usage){
   var be=activeBackend();
   var tok = usage ? ((usage.prompt_tokens||0)+(usage.completion_tokens||0)) : 0;
-  var cost = (usage && typeof usage.cost==="number") ? usage.cost : 0;
-  if(tok) sessTokens+=tok; if(cost) sessCost+=cost;
+  var cost = (usage && typeof usage.cost==="number") ? usage.cost : null;
+  if(tok) sessTokens+=tok; if(cost!=null) sessCost+=cost;
   return ((Date.now()-t0)/1000).toFixed(1)+"s"
     + (tok?(" · "+tok.toLocaleString()+" tok"):"")
-    + (be.cloud ? (" · $"+(cost||0).toFixed(4)) : " · $0 · fully local")
+    + (be.cloud ? (cost==null ? " · cost n/a" : " · $"+cost.toFixed(4)) : " · $0 · fully local")
     + " · "+be.model;
 }
 
@@ -499,12 +506,15 @@ async function driveReal(){
           busy=true; $("#send").disabled=true;
           try{ await driveReal(); }catch(e){ addBanner("✗ "+esc(e.message||e),"block"); }
           busy=false; $("#send").disabled=false; };
+      } else {
+        if(history.length && history[history.length-1].role==="user") history.pop();  // cancel: drop the unsent user turn
       }
       return;
     }
     var out, thinking=addThinking();
     try{ out=await callModel(msgs, function(){ thinking.remove(); }); }
-    catch(e){ thinking.remove(); addBanner("✗ "+esc(e.message||e),"block"); return; }
+    catch(e){ thinking.remove(); addBanner("✗ "+esc(e.message||e),"block");
+      if(history.length && history[history.length-1].role==="user") history.pop(); return; }
     thinking.remove();
     var asMsg={role:"assistant",content:out.content||null};
     if(out.tool_calls.length) asMsg.tool_calls=out.tool_calls;
@@ -531,7 +541,7 @@ var DEMO={
     {tool:"read_file",args:{path:"index.html"}},
     {say:"I'll add the button to the markup, then wire it up in app.js."},
     {tool:"edit_file",args:{path:"index.html",old_string:'      <button id="inc">+</button>',new_string:'      <button id="inc">+</button>\n      <button id="reset">Reset</button>'}},
-    {tool:"edit_file",args:{path:"app.js",old_string:"render();",new_string:"document.getElementById('reset').onclick = function(){ count = 0; render(); };\nrender();"}},
+    {tool:"edit_file",args:{path:"app.js",old_string:"document.getElementById('dec').onclick = function(){ count -= 1; render(); };",new_string:"document.getElementById('dec').onclick = function(){ count -= 1; render(); };\ndocument.getElementById('reset').onclick = function(){ count = 0; render(); };"}},
     {done:"Added a Reset button and wired it to set the count back to 0. Hit ▶ Run / Preview to try it."}
   ],
   "make the counter step by 5":[
@@ -643,7 +653,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 10 loaded · local(Ollama) mode · egress monitor · cost meter · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 11 loaded · bug-hunt hardened · Secret Guard cancel-safe · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 // probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
 detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });
