@@ -5,21 +5,19 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-A99C82)](LICENSE)
 [![models](https://img.shields.io/badge/models-local%20%2B%20OpenRouter-F4B740)](https://openrouter.ai/models)
 
-**A privacy-first coding harness.** Run local LLMs offline, or bring your own OpenRouter key for the full catalogue. Your code never leaves your machine when you don't want it to.
+**A privacy-first coding agent for your terminal.** Run local LLMs offline, or bring your own OpenRouter key for the full catalogue — no daily limits, no vendor lock-in, and your code never leaves your machine when you don't want it to.
 
-**▶ Try it in your browser (no install): https://jaydip-meesho.github.io/lumen/app/** — an agentic coding playground that runs entirely client-side. Zero-setup demo, or connect your own OpenRouter key. Your code and key never touch a server.
-
-### A guided tour of Lumen Web
-
-<p align="center">
-  <img src="docs/webtour.svg" alt="Guided tour of the Lumen Web interface — mode, airgap, project files, editor, run/preview, the agent, demo tasks, diff-approve, Secret Guard" width="900">
-</p>
-
-Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal coding assistant. Point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire model catalogue with a key you control. One interface, both worlds.
+```bash
+pipx install lumen-code     # then just run:  lumen
+```
 
 <p align="center">
-  <img src="docs/demo.svg" alt="Lumen — animated demo: offline build, diff + undo, airgap mode, Secret Guard, model catalogue" width="860">
+  <img src="docs/demo.svg" alt="Lumen in the terminal — offline build, diff + undo, airgap mode, Secret Guard, model catalogue" width="880">
 </p>
+
+Lumen is your own agentic **terminal** coding assistant: point it at a local model (Ollama, LM Studio, llama.cpp — fully offline) or at OpenRouter's entire catalogue with a key you control. It reads, edits, runs and searches your code straight from the shell — with an approval gate on anything destructive.
+
+> **Prefer not to install anything?** Try the same agent in your browser, zero setup → **https://jaydip-meesho.github.io/lumen/app/**
 
 ## Why
 
@@ -45,14 +43,7 @@ Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal
 
 ## What's inside
 
-**In your browser — [Lumen Web](https://jaydip-meesho.github.io/lumen/app/) (zero setup, nothing to install):**
-
-- **Real agent loop in the browser** — reads, writes, edits and searches files and iterates, streaming its work live.
-- **🖥 Local (Ollama) mode** — run a model on your own machine so nothing leaves at all; falls back gracefully if Ollama isn't running.
-- **🔒 Live egress monitor** — a "0 B left your machine" readout that only moves on a real cloud call. Privacy you can *watch*.
-- **🛡 Secret Guard**, **🔒 Airgap**, **📝 diff-before-write**, live **Run/Preview**, per-turn **token + cost meter**, one-click **download**, and a **zero-setup demo mode** (no key required).
-
-**In your terminal — the CLI (`pip install lumen-code`):**
+Lumen is, first and foremost, a **terminal** coding agent — `pip install lumen-code`, then run `lumen`:
 
 - **🔒 Airgap mode** — `--airgap` (or `/airgap`) patches the socket layer to hard-block *all* outbound network. Local model servers keep working; anything that would leave the machine is refused before a byte moves. Privacy you can prove, not just promise.
 - **🛡 Secret Guard** — before any *cloud* request, Lumen scans outgoing messages for API keys, private keys and `.env` values, and lets you block or redact them. In `local`/offline mode it's skipped entirely — nothing leaves the machine.
@@ -63,6 +54,8 @@ Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal
 - **🔁 Auto-fallback** — if a provider errors (local server down, cloud rate-limited), Lumen fails over to the configured `fallback` provider, warning you if code will now leave the machine.
 - **Runs any local model** — parses tool calls even from models that emit them as plain text (`<tool_call>…`, `<function=…>`, fenced JSON), not just those returning structured `tool_calls`.
 - **@file mentions** — reference a file with `@path/to/file` in your prompt and Lumen inlines its contents.
+
+**Also runnable in your browser** — [Lumen Web](https://jaydip-meesho.github.io/lumen/app/) brings the same agent to a tab (local via Ollama, or your OpenRouter key), with a live egress monitor, diff-approve, Secret Guard and a zero-setup demo — entirely client-side, nothing to install. Handy for trying it in seconds.
 
 ## Install
 
