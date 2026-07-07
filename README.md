@@ -28,7 +28,31 @@ Tired of daily limits on hosted coding tools? Lumen is your own agentic terminal
 - **The whole catalogue.** OpenRouter exposes hundreds of models (Claude, GPT, Gemini, Llama, Qwen, DeepSeek…). Switch between any of them — and your local models — without leaving the REPL.
 - **A real agent.** Not a chat box. Lumen reads and edits files, runs shell commands, and searches your code with an approval gate on anything destructive.
 
+## How it compares
+
+| | Hosted tools (Claude Code / Codex) | **Lumen** |
+|---|---|---|
+| Daily usage limits | Yes — locked out mid-task on a cap | **None** (local) · none beyond your balance |
+| Your code leaves your machine | **100%** — uploaded to a vendor cloud | **0 bytes** in local mode (shown live by the egress meter); provable via Airgap |
+| Cost | **$20–$200/mo** subscription (or metered API) | **$0** local · pay-per-token cloud with your key |
+| Model choice | **1** vendor's family | **300+** models via OpenRouter **+ any local model**, switchable mid-session |
+| Works offline | ❌ No | ✅ **Yes** (local) |
+| Setup to try | Account + subscription / API key | **Zero** — open the web app, no key, no login |
+| Context overhead / turn | Large, hidden | **~1,088 tokens**, measured (tiktoken) |
+| Open source | ❌ No | ✅ **MIT**, self-hosted, yours |
+
+<sub>Subscription figures are the published Pro ($20) / Max ($100–$200) tiers; "300+" is OpenRouter's current catalogue; 1,088 tokens is measured on Lumen's own system prompt + tool schemas. Lumen isn't trying to out-model frontier vendors — it uses the same frontier models via your key when you want, and wins on privacy, limits, cost, choice and openness.</sub>
+
 ## What's inside
+
+**In your browser — [Lumen Web](https://jaydip-meesho.github.io/lumen/app/) (zero setup, nothing to install):**
+
+- **Real agent loop in the browser** — reads, writes, edits and searches files and iterates, streaming its work live.
+- **🖥 Local (Ollama) mode** — run a model on your own machine so nothing leaves at all; falls back gracefully if Ollama isn't running.
+- **🔒 Live egress monitor** — a "0 B left your machine" readout that only moves on a real cloud call. Privacy you can *watch*.
+- **🛡 Secret Guard**, **🔒 Airgap**, **📝 diff-before-write**, live **Run/Preview**, per-turn **token + cost meter**, one-click **download**, and a **zero-setup demo mode** (no key required).
+
+**In your terminal — the CLI (`pip install lumen-code`):**
 
 - **🔒 Airgap mode** — `--airgap` (or `/airgap`) patches the socket layer to hard-block *all* outbound network. Local model servers keep working; anything that would leave the machine is refused before a byte moves. Privacy you can prove, not just promise.
 - **🛡 Secret Guard** — before any *cloud* request, Lumen scans outgoing messages for API keys, private keys and `.env` values, and lets you block or redact them. In `local`/offline mode it's skipped entirely — nothing leaves the machine.
