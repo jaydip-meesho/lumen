@@ -601,17 +601,21 @@
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // --- terminal transcript (the real smoke-test run) ---
+  // --- hero terminal: commands running one by one, on a loop (video-style) ---
   var lines = [
-    ['l-user','› edit greet.py: add farewell(name) and print it, then run'],
-    ['l-tool','  ⚙ read_file   greet.py'],
-    ['l-tool','  ⚙ edit_file   greet.py              1 occurrence replaced'],
-    ['l-tool','  ⚙ run_bash    python greet.py'],
-    ['l-err' ,'    /bin/sh: python: command not found      [exit 127]'],
-    ['l-ok'  ,'  ⚙ run_bash    python3 greet.py     ↻ recovered on its own'],
-    ['l-out' ,'    Hello, world from Lumen!'],
-    ['l-out' ,'    Goodbye, world!                    [exit 0]'],
-    ['l-final','  lumen  Added farewell(), updated __main__, verified both lines print.']
+    ['l-user','$ pipx install lumen-code'],
+    ['l-out' ,'  installed lumen-code 0.1.0'],
+    ['l-user','$ lumen'],
+    ['l-ok'  ,'  local · qwen3-coder:30b · offline · code never leaves this machine'],
+    ['l-user','› build hello.py that prints "hi from lumen", then run it'],
+    ['l-tool','  ⚙ write_file  hello.py'],
+    ['l-tool','  ⚙ run_bash    python3 hello.py'],
+    ['l-out' ,'    hi from lumen'],
+    ['l-final','  lumen  ✓ done — fully offline, nothing left your machine'],
+    ['l-user','$ lumen --airgap'],
+    ['l-ok'  ,'  🔒 airgap ENGAGED — all network blocked at the socket layer'],
+    ['l-user','$ lumen -p openrouter "summarize this repo"'],
+    ['l-err' ,'  ✗ blocked — refusing the cloud. nothing left your machine.']
   ];
   var el = document.getElementById('term');
   function render(n, withCursor){
@@ -625,9 +629,9 @@
     var i = 0;
     render(0, true);
     (function step(){
-      if(i >= lines.length){ render(lines.length, true); return; }
+      if(i >= lines.length){ render(lines.length, true); setTimeout(function(){ i=0; render(0,true); step(); }, 2800); return; }
       i++; render(i, true);
-      setTimeout(step, i===1?500:420);
+      setTimeout(step, i===1 ? 500 : (lines[i-1][0]==='l-user' ? 520 : 340));
     })();
   }
 
