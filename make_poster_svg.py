@@ -4,6 +4,7 @@ Static, self-contained SVG (open in a browser and screenshot to PNG for Slack).
 Run:  python3 make_poster_svg.py
 """
 
+import math
 INK="#14110C"; PANEL="#1E1A13"; S2="#241F16"; LINE="#332B20"
 GOLD="#F4B740"; HI="#FFD980"; TEAL="#4FD1C5"; FG="#F1E9D8"; MUT="#A99C82"; M2="#7C7159"; RED="#E8806B"; GRN="#93D07E"
 MAG="#E01E8B"
@@ -36,10 +37,17 @@ E.append(rr(40,40,920,232,20,PANEL,LINE,1.5))
 E.append(f'<circle cx="898" cy="82" r="22" fill="{MAG}"/>')
 E.append(tx(898,90,"m",26,"#fff",SANS,"800","middle"))
 E.append(tx(898,124,"BUILDATHON ’26",10,M2,MONO,"700","middle",1.5))
+# logomark — a glowing aperture (lumen = a unit of light)
+lx,ly=84,102
+E.append(rr(58,76,52,52,14,S2,GOLD,1.5))
+for k in range(8):
+    a=math.radians(k*45)
+    E.append(f'<line x1="{lx+15*math.cos(a):.1f}" y1="{ly+15*math.sin(a):.1f}" x2="{lx+21*math.cos(a):.1f}" y2="{ly+21*math.sin(a):.1f}" stroke="{GOLD}" stroke-width="2" stroke-linecap="round"/>')
+E.append(f'<circle cx="{lx}" cy="{ly}" r="12" fill="none" stroke="{GOLD}" stroke-width="2.5"/>')
+E.append(f'<circle cx="{lx}" cy="{ly}" r="5" fill="{HI}"/>')
 # wordmark
-E.append(tx(72,112,"🔆",34,GOLD))
-E.append(tx(118,112,"lumen",46,GOLD,SANS,"800"))
-E.append(tx(72,146,"a privacy-first AI coding agent · terminal + browser",17,MUT,MONO))
+E.append(tx(128,114,"lumen",46,GOLD,SANS,"800"))
+E.append(tx(130,142,"privacy-first AI coding agent",16,MUT,MONO))
 # tagline
 E.append(tx(72,205,"Your code. Your machine.",38,FG,SANS,"800"))
 E.append(tx(72,205+46,"Your rules.",38,GOLD,SANS,"800"))
@@ -77,15 +85,16 @@ for i,(n,title,lines,c) in enumerate(steps):
     for j,ln in enumerate(lines):
         E.append(tx(x+26,sy+108+j*30,ln,15,MUT,SANS))
 
-# ---- feature grid 2x2 ----
-E.append(tx(40,812,"WHAT MAKES IT DIFFERENT",14,GOLD,MONO,"700",1.6))
+# ---- why it wins (unique, provable points) ----
+E.append(tx(40,806,"WHY IT WINS",14,GOLD,MONO,"700",1.6))
+E.append(tx(40,838,"Same frontier brains as Claude Code & Codex — none of the walls.",21,FG,SANS,"700"))
 feats=[
-  ("🛡","Secret Guard","Blocks API keys & .env before any cloud call.",GOLD),
-  ("🔒","Airgap","One flag hard-blocks all network at the OS socket layer.",TEAL),
-  ("🖥","Local & offline","Run any model on your machine. $0, no daily limits.",GRN),
-  ("📝","Diff + undo","Every change previewed & approved — nothing touches files unseen.",HI),
+  ("🔒","Privacy you can prove","A live 0-byte egress meter + OS-level airgap. Cloud tools literally can't show this.",TEAL),
+  ("♾","$0 and truly unlimited","The only one with a real offline mode — local runs free, forever, no daily cap.",GRN),
+  ("🔀","One key → 300+ models","Never vendor-locked: frontier via OpenRouter, or a private local model, mid-session.",GOLD),
+  ("🛡","Nothing changes unseen","Secret Guard blocks keys before any request; every edit is a diff you approve + undo.",HI),
 ]
-fx=[40,490]; fy=[830,982]; fw=470; fh=138
+fx=[40,490]; fy=[860,998]; fw=470; fh=132
 for i,(ic,title,desc,c) in enumerate(feats):
     x=fx[i%2]; y=fy[i//2]
     E.append(rr(x,y,fw,fh,16,PANEL,LINE,1))
