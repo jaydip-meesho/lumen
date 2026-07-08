@@ -215,8 +215,8 @@ def handle_slash(line: str, agent: Agent, cfg: Config) -> bool:
         ui.info("Conversation cleared.")
 
     elif cmd == "/save":
-        cfg.save()
-        ui.info("Config saved.")
+        if cfg.save():
+            ui.info("Config saved.")
 
     else:
         ui.warn(f"Unknown command: {cmd}. Try /help")

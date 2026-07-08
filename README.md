@@ -36,10 +36,10 @@ Lumen is your own agentic **terminal** coding assistant: point it at a local mod
 | Model choice | **1** vendor's family | **300+** models via OpenRouter **+ any local model**, switchable mid-session |
 | Works offline | ❌ No | ✅ **Yes** (local) |
 | Setup to try | Account + subscription / API key | **Zero** — open the web app, no key, no login |
-| Context overhead / turn | Large, hidden | **~1,088 tokens**, measured (tiktoken) |
+| Context overhead / turn | Large, hidden | **~1,100 tokens**, measured (run `scripts/measure_context.py`) |
 | Open source | ❌ No | ✅ **MIT**, self-hosted, yours |
 
-<sub>Subscription figures are the published Pro ($20) / Max ($100–$200) tiers; "300+" is OpenRouter's current catalogue; 1,088 tokens is measured on Lumen's own system prompt + tool schemas. Lumen isn't trying to out-model frontier vendors — it uses the same frontier models via your key when you want, and wins on privacy, limits, cost, choice and openness.</sub>
+<sub>Subscription figures are the published Pro ($20) / Max ($100–$200) tiers; "300+" is OpenRouter's current catalogue; 1,100 tokens is measured on Lumen's own system prompt + tool schemas. Lumen isn't trying to out-model frontier vendors — it uses the same frontier models via your key when you want, and wins on privacy, limits, cost, choice and openness.</sub>
 
 ## What's inside
 
@@ -167,16 +167,26 @@ lumen/
   agent.py               the agent loop: stream → run tools → repeat
   session.py             conversation state + usage/cost totals
   config.py              providers, models, keys, preferences
-  prompts.py             system prompt
+  prompts.py             system prompt (+ project memory)
+  security.py            Secret Guard — scan/redact secrets before any cloud call
+  airgap.py              socket-layer hard block of all outbound network
+  diffing.py             unified-diff preview for pending file changes
+  persistence.py         local session save / load / resume
+  toolcall_parse.py      parse tool calls from models that emit them as text
   providers/
     openai_compat.py     one OpenAI-compatible client for local + cloud
     base.py              Delta / Completion / ToolCall types
   tools/
+    base.py              Tool definition + JSON-schema export
     fs.py                read / write / edit / list
-    shell.py             run_bash
+    shell.py             run_bash (permission-gated)
     search.py            regex search + glob find
     registry.py          schema export + dispatch
   ui/console.py          rich-based streaming, tool display, permissions
+
+scripts/                 dev-only tooling (needs `pip install -e ".[dev]"`)
+  measure_context.py     reproduce the ~1,100-token context-overhead figure
+  build_deck.py, make_*_svg.py   pitch deck + demo/poster generators
 ```
 
 Local and cloud share **one** client because Ollama, LM Studio, llama.cpp and

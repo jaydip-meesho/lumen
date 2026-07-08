@@ -93,13 +93,21 @@ class Config:
             airgap=bool(data.get("airgap", False)),
         )
 
-    def save(self) -> None:
-        CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-        CONFIG_PATH.write_text(json.dumps(self.to_dict(), indent=2))
+    def save(self) -> bool:
+        """Persist config. Returns False (never raises) if the write fails,
+        so an interactive `/save` or `lumen config set-*` can't crash the session."""
         try:
-            os.chmod(CONFIG_PATH, 0o600)  # keys may live here
-        except OSError:
-            pass
+            CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+            CONFIG_PATH.write_text(json.dumps(self.to_dict(), indent=2))
+            try:
+                os.chmod(CONFIG_PATH, 0o600)  # keys may live here
+            except OSError:
+                pass
+            return True
+        except OSError as exc:
+            from lumen import ui
+            ui.error(f"Could not save config to {CONFIG_PATH}: {exc}")
+            return False
 
     def to_dict(self) -> dict:
         return {

@@ -150,7 +150,8 @@ class Agent:
             return None
         try:
             return self.make_provider(name)
-        except Exception:
+        except (KeyError, ValueError, ProviderError) as exc:
+            ui.warn(f"Fallback provider '{name}' could not be built: {exc}")
             return None
 
     # -- secret guard ------------------------------------------------------

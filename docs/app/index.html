@@ -217,7 +217,7 @@ var VFS = {
   "style.css":
 "body{font-family:system-ui,sans-serif;background:#14110C;color:#F1E9D8;display:grid;place-items:center;height:100vh;margin:0}\n.app{text-align:center}\nh1{font-weight:800;letter-spacing:-.02em}\n.count{font-size:72px;color:#F4B740;margin:12px 0;font-variant-numeric:tabular-nums}\n.controls{display:flex;gap:10px;justify-content:center}\nbutton{font-size:22px;width:52px;height:52px;border-radius:12px;border:1px solid #332B20;background:#1E1A13;color:#F1E9D8;cursor:pointer}\nbutton:hover{border-color:#F4B740}\n",
   ".env":
-"# local secrets — should NEVER be sent to a cloud model\nOPENROUTER_API_KEY=sk-or-v1-3f9a2b7c8d1e4f6a9b0c2d5e8f1a4b7c\nAWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\n",
+"# FAKE demo secrets (not real) — here so you can watch the Secret Guard block them\nOPENROUTER_API_KEY=sk-or-v1-EXAMPLE-NOT-A-REAL-KEY-000000000000\nAWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\n",
   "README.md":
 "# Counter\nA tiny demo project for Lumen Web. Ask the agent to change it, then hit Run / Preview.\n"
 };
@@ -232,7 +232,9 @@ function tree(){
   var t=$("#tree"); t.innerHTML="";
   Object.keys(VFS).sort().forEach(function(p){
     var d=document.createElement("div"); d.className="f"+(p===currentFile?" active":"");
-    d.innerHTML='<span class="ic">'+(p.indexOf(".")>-1?"◦":"▸")+'</span>'+p;
+    var ic=document.createElement("span"); ic.className="ic"; ic.textContent=(p.indexOf(".")>-1?"◦":"▸");
+    var nm=document.createElement("span"); nm.textContent=p;   // textContent, NOT innerHTML — filenames are model-controlled
+    d.appendChild(ic); d.appendChild(nm);
     d.onclick=function(){ openFile(p); }; t.appendChild(d);
   });
 }
@@ -282,6 +284,9 @@ function applyChange(path, newContent, logEl){
 }
 
 function runTool(name, args, logEl){
+  args=args||{};
+  if((name==="read_file"||name==="write_file"||name==="edit_file") && (typeof args.path!=="string" || !args.path))
+    return Promise.resolve("Error: missing or invalid 'path' for "+name);
   if(name==="read_file"){ var p=args.path; return Promise.resolve(VFS[p]!=null?VFS[p]:("Error: file not found: "+p)); }
   if(name==="list_dir"){ return Promise.resolve(Object.keys(VFS).sort().join("\n")); }
   if(name==="write_file"){ return applyChange(args.path, args.content||"", logEl); }
@@ -308,7 +313,7 @@ function lineDiff(oldStr,newStr){
   for(i=oe;i<Math.min(oe+2,o.length);i++) rows.push(["ctx",o[i]]);
   return rows;
 }
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function renderDiff(path, rows, label){
   var d=document.createElement("div"); d.className="diff";
   var body=rows.map(function(r){var pre=r[0]==="add"?"+":r[0]==="del"?"-":" ";return '<div class="row '+r[0]+'">'+pre+" "+esc(r[1])+"</div>";}).join("");
@@ -526,11 +531,13 @@ async function driveReal(){
       if(!out.content){ var em=addAssistant(); em.textContent="(the model returned an empty response — press Send to retry, or switch model via ⚙ connect key)"; }
       addStat(turnStat(t0, out.usage)); return;
     }
-    for(var j=0;j<out.tool_calls.length;j++){ var tc=out.tool_calls[j], args={};
-      try{args=JSON.parse(tc.function.arguments||"{}");}catch(e){}
-      addToolLine(tc.function.name,args);
-      var result=await runTool(tc.function.name,args,log);
-      if(tc.function.name==="read_file"||tc.function.name==="list_dir") addResult(result);
+    for(var j=0;j<out.tool_calls.length;j++){ var tc=out.tool_calls[j], args=null;
+      try{ args=JSON.parse(tc.function.arguments||"{}"); }catch(e){}
+      addToolLine(tc.function.name, (args && typeof args==="object") ? args : (tc.function.arguments||""));
+      var result;
+      if(!args || typeof args!=="object"){ result="Error: could not parse arguments for "+tc.function.name+" (invalid JSON). Reissue with valid JSON."; addResult(result); }
+      else { result=await runTool(tc.function.name,args,log);
+        if(tc.function.name==="read_file"||tc.function.name==="list_dir") addResult(result); }
       history.push({role:"tool",tool_call_id:tc.id,content:result});
     }
   }
@@ -656,7 +663,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 15 loaded · preview via data-url · bug-hunt hardened · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 16 loaded · security-hardened (XSS + airgap + guards) · bug-hunt hardened · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 // probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
 detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });

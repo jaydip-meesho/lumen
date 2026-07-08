@@ -165,6 +165,12 @@ class OpenAICompatProvider:
     # -- catalogue ---------------------------------------------------------
     def list_models(self) -> list[dict]:
         """Return the backend's model catalogue (OpenAI /models shape)."""
+        from lumen import airgap
+        if airgap.is_enabled() and not self.offline:
+            raise ProviderError(
+                f"Airgap is ON — refusing to reach {self.name} for the model list. "
+                "Nothing left the machine."
+            )
         try:
             response = httpx.get(
                 f"{self.base_url}/models",

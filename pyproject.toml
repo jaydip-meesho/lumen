@@ -13,6 +13,14 @@ dependencies = [
     "prompt_toolkit>=3.0",
 ]
 
+# Tooling used only for the measurement script and the pitch/demo generators
+# (scripts/), not needed to run Lumen itself.
+[project.optional-dependencies]
+dev = [
+    "tiktoken>=0.7",      # scripts/measure_context.py — exact token counts
+    "python-pptx>=0.6",   # scripts/build_deck.py — pitch deck
+]
+
 [project.scripts]
 lumen = "lumen.cli:main"
 

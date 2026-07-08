@@ -15,7 +15,9 @@ def _run_bash(args: dict) -> str:
     try:
         proc = subprocess.run(
             command,
-            shell=True,
+            # shell=True is intentional: this IS the agent's shell tool. It requires_approval,
+            # so the user sees and confirms every command before it runs (see tools/base.py + the agent's permission gate).
+            shell=True,  # noqa: S602
             capture_output=True,
             text=True,
             timeout=timeout,
