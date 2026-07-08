@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+<rect width="1000" height="1250" fill="#14110C"/>
+<defs><radialGradient id="g" cx="82%" cy="0%" r="70%"><stop offset="0%" stop-color="#F4B740" stop-opacity="0.16"/><stop offset="60%" stop-color="#F4B740" stop-opacity="0"/></radialGradient></defs>
+<rect width="1000" height="1250" fill="url(#g)"/>
+<rect x="40" y="40" width="920" height="232" rx="20" fill="#1E1A13" stroke="#332B20" stroke-width="1.5"/>
+<circle cx="898" cy="82" r="22" fill="#E01E8B"/>
+<text x="898" y="90" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="26" fill="#fff" font-weight="800" text-anchor="middle">m</text>
+<text x="898" y="124" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="10" fill="#7C7159" font-weight="700" text-anchor="middle" letter-spacing="1.5">BUILDATHON ’26</text>
+<text x="72" y="112" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="34" fill="#F4B740" font-weight="400">🔆</text>
+<text x="118" y="112" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="46" fill="#F4B740" font-weight="800">lumen</text>
+<text x="72" y="146" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="17" fill="#A99C82" font-weight="400">a privacy-first AI coding agent · terminal + browser</text>
+<text x="72" y="205" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="38" fill="#F1E9D8" font-weight="800">Your code. Your machine.</text>
+<text x="72" y="251" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="38" fill="#F4B740" font-weight="800">Your rules.</text>
+<text x="72" y="268" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" fill="#A99C82" font-weight="400">Runs local &amp; offline, or on your own OpenRouter key — nothing leaves your machine.</text>
+<rect x="40" y="292" width="640" height="50" rx="12" fill="#F4B740"/>
+<text x="62" y="324" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="21" fill="#14110C" font-weight="700">▶  Try it live:  jaydip-meesho.github.io/lumen</text>
+<text x="40" y="392" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="14" fill="#F4B740" font-weight="700" text-anchor="1.6">THE PROBLEM IT KILLS  →</text>
+<rect x="40" y="406" width="232" height="46" rx="23" fill="#241F16" stroke="#332B20" stroke-width="1"/>
+<rect x="40" y="406" width="4" height="46" rx="2" fill="#E8806B"/>
+<text x="62" y="435" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="16" fill="#F1E9D8" font-weight="400">⏳  daily lockouts</text>
+<rect x="288" y="406" width="352" height="46" rx="23" fill="#241F16" stroke="#332B20" stroke-width="1"/>
+<rect x="288" y="406" width="4" height="46" rx="2" fill="#F4B740"/>
+<text x="310" y="435" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="16" fill="#F1E9D8" font-weight="400">☁  your code uploaded to a vendor</text>
+<rect x="656" y="406" width="304" height="46" rx="23" fill="#241F16" stroke="#332B20" stroke-width="1"/>
+<rect x="656" y="406" width="4" height="46" rx="2" fill="#4FD1C5"/>
+<text x="678" y="435" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="16" fill="#F1E9D8" font-weight="400">🔒  one-vendor lock-in</text>
+<text x="40" y="512" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="14" fill="#F4B740" font-weight="700" text-anchor="1.6">HOW IT WORKS</text>
+<rect x="40" y="530" width="294" height="232" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="40" y="530" width="294" height="5" rx="3" fill="#4FD1C5"/>
+<circle cx="80" cy="582" r="20" fill="#241F16" stroke="#4FD1C5" stroke-width="1.5"/>
+<text x="80" y="589" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="20" fill="#4FD1C5" font-weight="800" text-anchor="middle">1</text>
+<text x="112" y="589" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="21" fill="#F1E9D8" font-weight="700">Pick your model</text>
+<text x="66" y="638" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Local (Ollama) — $0, offline.</text>
+<text x="66" y="668" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Or OpenRouter: 300+ models,</text>
+<text x="66" y="698" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">your own key, no daily cap.</text>
+<rect x="353" y="530" width="294" height="232" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="353" y="530" width="294" height="5" rx="3" fill="#F4B740"/>
+<circle cx="393" cy="582" r="20" fill="#241F16" stroke="#F4B740" stroke-width="1.5"/>
+<text x="393" y="589" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="20" fill="#F4B740" font-weight="800" text-anchor="middle">2</text>
+<text x="425" y="589" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="21" fill="#F1E9D8" font-weight="700">It codes for you</text>
+<text x="379" y="638" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Reads, edits &amp; runs your files.</text>
+<text x="379" y="668" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Shows a diff before every change.</text>
+<text x="379" y="698" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Approve, or /undo anytime.</text>
+<rect x="666" y="530" width="294" height="232" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="666" y="530" width="294" height="5" rx="3" fill="#93D07E"/>
+<circle cx="706" cy="582" r="20" fill="#241F16" stroke="#93D07E" stroke-width="1.5"/>
+<text x="706" y="589" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="20" fill="#93D07E" font-weight="800" text-anchor="middle">3</text>
+<text x="738" y="589" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="21" fill="#F1E9D8" font-weight="700">Prove it's private</text>
+<text x="692" y="638" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Flip Airgap → all network blocked.</text>
+<text x="692" y="668" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Secret Guard stops keys leaking.</text>
+<text x="692" y="698" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">The egress meter stays at 0.</text>
+<text x="40" y="812" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="14" fill="#F4B740" font-weight="700" text-anchor="1.6">WHAT MAKES IT DIFFERENT</text>
+<rect x="40" y="830" width="470" height="138" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="40" y="830" width="5" height="138" rx="3" fill="#F4B740"/>
+<text x="68" y="886" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="30" fill="#F4B740" font-weight="400">🛡</text>
+<text x="116" y="882" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" fill="#F1E9D8" font-weight="700">Secret Guard</text>
+<text x="116" y="914" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Blocks API keys &amp; .env before any cloud call.</text>
+<rect x="490" y="830" width="470" height="138" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="490" y="830" width="5" height="138" rx="3" fill="#4FD1C5"/>
+<text x="518" y="886" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="30" fill="#4FD1C5" font-weight="400">🔒</text>
+<text x="566" y="882" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" fill="#F1E9D8" font-weight="700">Airgap</text>
+<text x="566" y="914" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">One flag hard-blocks all network at the OS</text>
+<text x="566" y="938" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">socket layer.</text>
+<rect x="40" y="982" width="470" height="138" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="40" y="982" width="5" height="138" rx="3" fill="#93D07E"/>
+<text x="68" y="1038" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="30" fill="#93D07E" font-weight="400">🖥</text>
+<text x="116" y="1034" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" fill="#F1E9D8" font-weight="700">Local &amp; offline</text>
+<text x="116" y="1066" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Run any model on your machine. $0, no daily</text>
+<text x="116" y="1090" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">limits.</text>
+<rect x="490" y="982" width="470" height="138" rx="16" fill="#1E1A13" stroke="#332B20" stroke-width="1"/>
+<rect x="490" y="982" width="5" height="138" rx="3" fill="#FFD980"/>
+<text x="518" y="1038" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="30" fill="#FFD980" font-weight="400">📝</text>
+<text x="566" y="1034" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" fill="#F1E9D8" font-weight="700">Diff + undo</text>
+<text x="566" y="1066" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">Every change previewed &amp; approved — nothing</text>
+<text x="566" y="1090" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" fill="#A99C82" font-weight="400">touches files unseen.</text>
+<line x1="40" y1="1150" x2="960" y2="1150" stroke="#332B20"/>
+<text x="40" y="1188" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="16" fill="#F4B740" font-weight="700">pip install lumen-code</text>
+<text x="40" y="1214" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="14" fill="#A99C82" font-weight="400">open source (MIT) · github.com/jaydip-meesho/lumen</text>
+<text x="960" y="1188" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="16" fill="#F1E9D8" font-weight="700" text-anchor="end">private · unlimited · yours</text>
+<text x="960" y="1214" font-family="ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="13" fill="#7C7159" font-weight="400" text-anchor="end">built at Buildathon by Jaydip</text>
+</svg>
