@@ -246,9 +246,10 @@ function buildPreviewDoc(){
   if(js) html=html.replace("</body>","<scr"+"ipt>"+js+"</scr"+"ipt></body>");
   return html;
 }
-function refreshPreview(){ var f=$("#preview"); if(!f) return; var doc=buildPreviewDoc();
-  // clear first so re-showing with identical content still triggers a real (re)load — fixes the blank iframe
-  f.srcdoc=""; requestAnimationFrame(function(){ f.srcdoc=doc; }); }
+function refreshPreview(){ var f=$("#preview"); if(!f) return;
+  // a data: URL renders reliably in a sandboxed iframe (unlike srcdoc in some browsers) and
+  // reloads on every content change; the frame stays isolated (opaque origin), so the key is safe.
+  f.src="data:text/html;charset=utf-8,"+encodeURIComponent(buildPreviewDoc()); }
 
 var TOOLS_SCHEMA=[
   {type:"function",function:{name:"read_file",description:"Read a file from the project.",parameters:{type:"object",properties:{path:{type:"string"}},required:["path"]}}},
@@ -655,7 +656,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 14 loaded · preview reload fix · bug-hunt hardened · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 15 loaded · preview via data-url · bug-hunt hardened · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 // probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
 detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });
