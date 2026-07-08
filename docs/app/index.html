@@ -137,34 +137,9 @@
   .modal .mrow .primary{background:var(--lumen);color:var(--ink);border-color:var(--lumen);font-weight:700}
   .note{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:12px;line-height:1.5}
   .privacy{color:var(--safe)}
-  /* welcome / home screen */
-  .welcome{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:28px;gap:14px;background:
-      radial-gradient(60vw 60vh at 82% -6%, rgba(244,183,64,.14), transparent 60%),
-      radial-gradient(50vw 40vh at 8% 4%, rgba(79,209,197,.07), transparent 55%), var(--ink);}
-  .welcome.hidden{display:none}
-  .w-brand{font-family:var(--mono);font-weight:700;letter-spacing:.04em;font-size:15px;color:var(--muted)}
-  .w-brand b{color:var(--lumen)}
-  .welcome h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;max-width:18ch;margin:.2em 0;color:var(--fg)}
-  .welcome p{color:var(--muted);max-width:54ch;font-size:15px;line-height:1.5;margin:0}
-  .w-points{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 4px}
-  .w-points span{font-family:var(--mono);font-size:12.5px;color:var(--fg);border:1px solid var(--line);
-    background:var(--surface);border-radius:999px;padding:7px 13px}
-  .w-start{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--ink);background:var(--lumen);
-    border-radius:10px;padding:13px 26px;margin-top:6px;transition:.15s}
-  .w-start:hover{background:var(--lumen-hi);transform:translateY(-1px)}
-  .w-hint{font-family:var(--mono);font-size:12px;color:var(--muted-2);margin-top:2px}
 </style>
 </head>
 <body>
-<div class="welcome" id="welcome">
-  <div class="w-brand">🔆 <b>lumen</b> web</div>
-  <h1>An AI coding agent that runs in your browser.</h1>
-  <p>Your code and your key never touch a server. Try it with zero setup — or point it at your own local model / OpenRouter key. Nothing leaves your machine.</p>
-  <div class="w-points"><span>🔒 nothing leaves your machine</span><span>♾ no daily lockout</span><span>🛡 secrets never reach the cloud</span></div>
-  <button class="w-start" id="startBtn">▶ Start coding</button>
-  <div class="w-hint">no signup · no key needed for the demo</div>
-</div>
 <header>
   <span class="brand"><span class="dot"></span>lumen<small>web</small></span>
   <span class="pill demo" id="modePill"><span class="led"></span><span id="modeText">demo mode</span></span>
@@ -678,12 +653,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-(function(){ var w=$("#welcome"), s=$("#startBtn");
-  function enter(){ w.classList.add("hidden"); try{$("#input").focus();}catch(e){} }
-  if(s) s.onclick=enter;
-  if(w) w.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key==="Escape") enter(); });
-})();
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 12 loaded · home screen · bug-hunt hardened · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 13 loaded · bug-hunt hardened · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 // probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
 detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });
