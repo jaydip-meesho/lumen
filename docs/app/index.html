@@ -65,7 +65,7 @@
   .tree .f .ic{opacity:.7}
   #editor{flex:1;min-width:0;background:#0C0A07;color:var(--fg);border:none;resize:none;
     font-family:var(--mono);font-size:13px;line-height:1.55;padding:14px 16px;white-space:pre;overflow:auto}
-  #preview{flex:1;border:none;background:#fff;width:100%}
+  #preview{flex:1;border:none;background:#0C0A07;width:100%}
   #console{flex:1;background:#0C0A07;font-family:var(--mono);font-size:12.5px;color:var(--muted);
     padding:12px 16px;overflow:auto;white-space:pre-wrap}
 
@@ -246,7 +246,9 @@ function buildPreviewDoc(){
   if(js) html=html.replace("</body>","<scr"+"ipt>"+js+"</scr"+"ipt></body>");
   return html;
 }
-function refreshPreview(){ $("#preview").srcdoc=buildPreviewDoc(); }
+function refreshPreview(){ var f=$("#preview"); if(!f) return; var doc=buildPreviewDoc();
+  // clear first so re-showing with identical content still triggers a real (re)load — fixes the blank iframe
+  f.srcdoc=""; requestAnimationFrame(function(){ f.srcdoc=doc; }); }
 
 var TOOLS_SCHEMA=[
   {type:"function",function:{name:"read_file",description:"Read a file from the project.",parameters:{type:"object",properties:{path:{type:"string"}},required:["path"]}}},
@@ -653,7 +655,7 @@ $("#keySave").onclick=function(){ var k=$("#keyInput").value.trim(), m=$("#model
   else { apiKey=null; setMode(); $("#keyModal").classList.remove("show"); } };
 
 /* ---------------- boot ---------------- */
-try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 13 loaded · bug-hunt hardened · airgap OFF"); }catch(e){}
+try{ console.log("%cLumen Web","color:#F4B740;font-weight:bold","build 14 loaded · preview reload fix · bug-hunt hardened · airgap OFF"); }catch(e){}
 tree(); openFile("app.js"); refreshPreview();
 // probe for a local Ollama model (non-blocking; fails silently if not running / blocked)
 detectLocal().then(function(){ setLocalBtn(); if(localAvailable){ addStat("🖥 local model detected: "+localModel+" — click “🖥 local” to run fully offline, zero cloud."); } });
